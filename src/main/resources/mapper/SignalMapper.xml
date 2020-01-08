@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.syzx.repository.SignalMapper">
+    <sql id="allcolumn">
+        SIG_ID,SIG_Code,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum,SIG_DataType
+    </sql>
+    <select id="getSignalList" resultType="com.rtst.syzx.entity.Signal">
+        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime as dsigDateTime
+                from C_Signal s
+                left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
+                left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
+                order by d.DSIG_DateTime desc
+    </select>
+    <select id="getSignalListHistory" resultType="com.rtst.syzx.entity.Signal">
+        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime as dsigDateTime
+                from C_Signal s
+                left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
+                left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
+                where 1=1
+                <if test="null!= dsigDateTime and ''!=dsigDateTime">
+                    and convert(varchar(10),d.DSIG_DateTime,120)= #{dsigDateTime}
+                </if>
+                order by d.DSIG_DateTime desc,s.SIG_ID asc
+    </select>
+    <select id="getAlarmListHistory" resultType="com.rtst.syzx.entity.Signal">
+        select * from (select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,f.FAC_Name FAC_Name,d.DSIG_Value DSIG_Value,d.DSIG_DateTime as dsigDateTime
+        from C_Signal s
+        left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
+        left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
+        where s.SIG_ID = 34 or s.SIG_ID = 35 or s.SIG_ID = 39 or s.SIG_ID = 40) as a
+        where 1=1
+        <if test="null!= dsigDateTime and ''!=dsigDateTime">
+            and convert(varchar(10),a.dsigDateTime,120)= #{dsigDateTime}
+        </if>
+        order by a.dsigDateTime desc,a.SIG_ID asc
+    </select>
+</mapper>

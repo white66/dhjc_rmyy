@@ -1,0 +1,38 @@
+server:
+  port: 8088
+#mybatis 配置
+mybatis:
+  type-aliases-package: com.rtst.syzx.entity
+  mapper-locations: classpath:mapper/*Mapper.xml
+# SqlServer 配置
+spring:
+  datasource:
+    url: jdbc:sqlserver://59.172.63.46:14333;databasename=RTST_SYschool
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 88123456aa
+    #连接池配置
+    druid:
+      initial-size: 5
+      max-active: 50
+      min-idle: 1
+      max-wait: 6000
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 30000
+    password: abc123
+
+#配置控制台输出执行的sql语句
+logging:
+  level:
+    com.rtst.syzx.repository: DEBUG
+pagehelper:
+  helperDialect: sqlserver
+  #启用合理化，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  pageSizeZero: true
+
