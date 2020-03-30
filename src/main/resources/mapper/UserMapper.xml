@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.rtst.syzx.repository.systemInfo.UserMapper">
+<mapper namespace="com.rtst.dhjc.repository.systemInfo.UserMapper">
     <sql id="allcolumn">
        userId,userName,passWord,email,state,name,salt,expiredDate,createTime,phone,org
     </sql>
-    <insert id="addUser" parameterType="com.rtst.syzx.entity.systemInfo.User">
+    <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
         insert into sys_user(userName,passWord,email,state,name,salt,expiredDate,createTime,phone,org)
               values(#{userName},#{passWord},#{email},#{state},#{name},#{salt},#{expiredDate},#{createTime},#{phone},#{org})
     </insert>
-    <update id="updateUser" parameterType="com.rtst.syzx.entity.systemInfo.User">
+    <update id="updateUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
         update sys_user
         <trim prefix="set" suffixOverrides=",">
             <if test="null!=name and ''!=name">name= #{name},</if>
@@ -26,12 +26,12 @@
         delete from sys_user where userId = #{userId}
     </delete>
 
-    <select id="findUserByAccount"  parameterType="java.util.HashMap" resultType="com.rtst.syzx.entity.systemInfo.User">
+    <select id="findUserByAccount"  parameterType="java.util.HashMap" resultType="com.rtst.dhjc.entity.systemInfo.User">
         select <include refid="allcolumn"/>
               from sys_user
               where userName = #{userName}
     </select>
-    <select id="findUserList" resultType="com.rtst.syzx.entity.systemInfo.User">
+    <select id="findUserList" resultType="com.rtst.dhjc.entity.systemInfo.User">
         select <include refid="allcolumn"/>
                 from sys_user
     </select>

@@ -25,7 +25,7 @@
     </appender>
 
     <!--将项目所有的日志按照FILE的配置进行生成日志文件-->
-    <logger name="com.rtst.syzx" level="INFO" >
+    <logger name="com.rtst.dhjc" level="INFO" >
         <appender-ref ref="FILE"/>
     </logger>
     <!-- 日志输出级别 -->

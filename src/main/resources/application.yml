@@ -2,7 +2,7 @@ server:
   port: 8088
 #mybatis 配置
 mybatis:
-  type-aliases-package: com.rtst.syzx.entity
+  type-aliases-package: com.rtst.dhjc.entity
   mapper-locations: classpath:mapper/*Mapper.xml
 # SqlServer 配置
 spring:
