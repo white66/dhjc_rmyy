@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -31,8 +33,14 @@ public class LoginController {
             return BaseResult.error("密码不能为空！");
         }
         CacheUser loginUser =  userService.login(userName,passWord);
-        // 登录成功返回用户信息
-        return BaseResult.ok().put("data",loginUser);
+        Calendar c = Calendar.getInstance();
+        long loginDate = c.getTimeInMillis();//获取当前登陆时间
+        if(loginDate>loginUser.getExpiredDate().getTime()){
+            return BaseResult.error(400,"用户已过期");
+        }else{
+            // 登录成功返回用户信息
+            return BaseResult.ok().put("data",loginUser);
+        }
     }
     /**
      * description: 登出

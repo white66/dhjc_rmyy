@@ -23,6 +23,7 @@ public class Signal implements Serializable {
     private String fAC_Name;//设备类型名称
     private String dSIG_Value;//信号值
     private String dsigDateTime;//采集时间
+    private int schoolId;//采集信息关联学校ID
     private int pageNum;//页数
     private int pageSize;
 }

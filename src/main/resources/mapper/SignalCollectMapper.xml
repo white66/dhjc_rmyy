@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.SignalCollectMapper">
+    <insert id="addSignalCollect" parameterType="com.rtst.dhjc.entity.SignalCollectInfo">
+        insert into C_SignalCollect(comPort,deviceId) values (#{comPort},#{deviceId})
+    </insert>
+    <update id="updateSignalCollect" parameterType="com.rtst.dhjc.entity.SignalCollectInfo">
+        update C_SignalCollect
+              <trim prefix="set" suffixOverrides=",">
+                  <if test="null!=comPort and ''!=comPort">comPort=#{comPort},</if>
+                  <if test="null!=deviceId and ''!=deviceId">deviceId=#{deviceId},</if>
+              </trim>
+        where id =#{id}
+    </update>
+    <delete id="deleteSignalById" parameterType="com.rtst.dhjc.entity.SignalCollectInfo">
+        delete from C_SignalCollect where id = #{id}
+    </delete>
+    <delete id="deleteSignalByDeviceId" parameterType="com.rtst.dhjc.entity.SignalCollectInfo">
+        delete from C_SignalCollect where deviceId = #{deviceId}
+    </delete>
+
+    <select id="findSignalCollectListByDeviceName" parameterType="com.rtst.dhjc.entity.SignalCollectInfo" resultType="com.rtst.dhjc.entity.SignalCollectInfo">
+        <bind name="deviceName" value="'%'+ _parameter.getDeviceName() +'%'"/>
+        select s.id id,s.comPort comPort,s.deviceId deviceId,d.deviceName deviceName
+                from C_SignalCollect s
+                left join C_DeviceInfor d on d.id = s.deviceId
+                where 1=1
+                <if test="null!=deviceName and ''!=deviceName">
+                    and d.deviceName like #{deviceName}
+                </if>
+    </select>
+    <select id="findSignalCollectList" resultType="com.rtst.dhjc.entity.SignalCollectInfo">
+        select s.id id,s.comPort comPort,s.deviceId deviceId,d.deviceName deviceName
+                from C_SignalCollect s
+                left join C_DeviceInfor d on d.id = s.deviceId
+    </select>
+</mapper>

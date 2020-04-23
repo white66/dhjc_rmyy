@@ -19,8 +19,8 @@ public class SignalServiceImpl implements SignalService {
     @Autowired
     SignalMapper signalMapper;
     @Override
-    public List<Signal> getSignalList() {
-        List<Signal> signals = signalMapper.getSignalList();
+    public List<Signal> getSignalList(Signal signal) {
+        List<Signal> signals = signalMapper.getSignalList(signal);
         return signals;
     }
 

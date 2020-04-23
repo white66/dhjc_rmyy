@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.DeviceMapper">
+    <insert id="insertDevice" parameterType="com.rtst.dhjc.entity.DeviceInfo">
+        insert into C_DeviceInfor(deviceName,schoolId) values (#{deviceName},#{schoolId})
+    </insert>
+    <update id="updateDevice" parameterType="com.rtst.dhjc.entity.DeviceInfo">
+        update C_DeviceInfor
+        <trim prefix="set" suffixOverrides=",">
+            <if test="null!=deviceName and ''!=deviceName">deviceName=#{deviceName},</if>
+            <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
+        </trim>
+        where id =#{id}
+    </update>
+    <delete id="deleteDeviceById" parameterType="com.rtst.dhjc.entity.DeviceInfo">
+        delete from C_DeviceInfor  where id = #{id}
+    </delete>
+    <delete id="deleteDeviceBySchoolId" parameterType="com.rtst.dhjc.entity.DeviceInfo">
+        delete from C_DeviceInfor where schoolId = #{schoolId}
+    </delete>
+    <select id="findDevice" resultType="com.rtst.dhjc.entity.DeviceInfo">
+        select d.id id,d.deviceName deviceName,d.schoolId schoolId,s.schoolName schoolName from
+                    C_DeviceInfor d
+                    left join  C_SchoolInfor s on d.schoolId = s.id
+    </select>
+    <select id="deviceListBySchoolName" parameterType="com.rtst.dhjc.entity.DeviceInfo" resultType="com.rtst.dhjc.entity.DeviceInfo">
+        select d.id id,d.deviceName deviceName,d.schoolId schoolId,s.schoolName schoolName from
+                    C_DeviceInfor d
+                    left join  C_SchoolInfor s on d.schoolId = s.id
+                    where s.schoolName = #{schoolName}
+    </select>
+
+</mapper>

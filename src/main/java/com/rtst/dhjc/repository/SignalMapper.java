@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public interface SignalMapper {
 
-    List<Signal> getSignalList();
+    List<Signal> getSignalList(Signal signal);
 
     List<Signal> getSignalListHistory(Signal signal);
 

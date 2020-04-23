@@ -27,9 +27,9 @@ public class IndexController {
      * @return
      */
     @GetMapping("/signalList")
-    public BaseResult signalList(){
+    public BaseResult signalList(@RequestBody Signal signal){
         PageHelper.startPage(1,40);
-        List<Signal> signalList = signalService.getSignalList();
+        List<Signal> signalList = signalService.getSignalList(signal);
         PageInfo pageInfo = new PageInfo(signalList);
         return BaseResult.ok().put("data",pageInfo);
     }

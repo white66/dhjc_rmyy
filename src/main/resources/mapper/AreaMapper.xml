@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.AreaMapper">
+    <insert id="addArea" parameterType="com.rtst.dhjc.entity.AreaInfo">
+        insert into C_Area(parentId,areaName) values (#{parentId},#{areaName})
+    </insert>
+    <update id="updateArea" parameterType="com.rtst.dhjc.entity.AreaInfo">
+        update C_Area
+            <trim prefix="set" suffixOverrides=",">
+                <if test="null!=parentId and ''!=parentId">parentId=#{parentId},</if>
+                <if test="null!=areaName and ''!=areaName">areaName=#{areaName},</if>
+            </trim>
+        where id =#{id}
+    </update>
+    <delete id="deleteArea" parameterType="com.rtst.dhjc.entity.AreaInfo">
+        delete from C_Area
+              where id = #{id}
+    </delete>
+
+    <select id="findAreaList" parameterType="com.rtst.dhjc.entity.AreaInfo" resultType="com.rtst.dhjc.entity.AreaInfo">
+        select id,parentId,areaName from C_Area
+                where parentId = #{parentId}
+    </select>
+    <select id="findAreaListUp" parameterType="com.rtst.dhjc.entity.AreaInfo" resultType="com.rtst.dhjc.entity.AreaInfo">
+        select id,parentId,areaName from C_Area
+                where id = #{id}
+                union all
+        select id,parentId,areaName from C_Area
+                where id = (select parentId from C_Area
+                where id = #{id})
+                union all
+        select id,parentId,areaName from C_Area
+                where id = (select parentId from C_Area
+                where id = (select parentId from C_Area
+                where id = #{id}))
+    </select>
+</mapper>

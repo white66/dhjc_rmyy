@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface SignalService {
 
-    List<Signal> getSignalList();
+    List<Signal> getSignalList(Signal signal);
 
     List<Signal> getSignalListHistory(Signal signal);
 

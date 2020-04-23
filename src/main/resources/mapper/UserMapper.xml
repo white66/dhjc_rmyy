@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.UserMapper">
     <sql id="allcolumn">
-       userId,userName,passWord,email,state,name,salt,expiredDate,createTime,phone,org
+       userId,userName,passWord,schoolId,state,name,salt,expiredDate,createTime,phone,remarks
     </sql>
     <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
-        insert into sys_user(userName,passWord,email,state,name,salt,expiredDate,createTime,phone,org)
-              values(#{userName},#{passWord},#{email},#{state},#{name},#{salt},#{expiredDate},#{createTime},#{phone},#{org})
+        insert into sys_user(userName,passWord,schoolId,state,name,salt,expiredDate,createTime,phone,remarks)
+              values(#{userName},#{passWord},#{schoolId},#{state},#{name},#{salt},#{expiredDate},#{createTime},#{phone},#{remarks})
     </insert>
     <update id="updateUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
         update sys_user
@@ -15,10 +15,10 @@
             <if test="null!=userName and ''!=userName">userName=#{userName},</if>
             <if test="null!=passWord and ''!=passWord">passWord=#{passWord},</if>
             <if test="state>=0 and null!=state">state=#{state},</if>
-            <if test="null!=email and ''!=email">email=#{email},</if>
+            <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
             <if test="null!=expiredDate and ''!=expiredDate">expiredDate=#{expiredDate},</if>
             <if test="null!=phone and ''!=phone">phone=#{phone},</if>
-            <if test="null!=org and ''!=org">org=#{org}</if>
+            <if test="null!=remarks and ''!=remarks">remarks=#{remarks}</if>
         </trim>
         where userId= #{userId}
     </update>
