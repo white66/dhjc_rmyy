@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * @since 2019-06-28
+ * @since 2020-05-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -19,9 +19,9 @@ public class UserRole implements Serializable {
 
     private Long id;
 
-    private Integer userId;
+    private Integer userId;//用户ID
 
-    private Integer roleId;
+    private Integer roleId;//角色ID
 
 
 }

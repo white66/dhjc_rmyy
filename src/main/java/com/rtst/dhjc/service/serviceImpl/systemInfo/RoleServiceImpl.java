@@ -1,5 +1,6 @@
 package com.rtst.dhjc.service.serviceImpl.systemInfo;
 
+import com.rtst.dhjc.entity.systemInfo.Permission;
 import com.rtst.dhjc.entity.systemInfo.Role;
 import com.rtst.dhjc.repository.systemInfo.RoleMapper;
 import com.rtst.dhjc.service.RoleService;
@@ -24,7 +25,6 @@ public class RoleServiceImpl implements RoleService {
         List<Role> roles = roleMapper.findRoleByUserId(userId);
         return roles;
     }
-
     /**
      * 查询角色列表
      * @return
@@ -87,5 +87,11 @@ public class RoleServiceImpl implements RoleService {
         }
         return resultMap;
 
+    }
+
+    @Override
+    public List<Permission> findPermissionByRoleId(Role role) {
+        List<Permission> permissions = roleMapper.findPermissionByRoleId(role);
+        return permissions;
     }
 }

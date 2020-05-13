@@ -4,6 +4,7 @@ import com.rtst.dhjc.bean.BaseResult;
 import com.rtst.dhjc.bean.CacheUser;
 import com.rtst.dhjc.entity.systemInfo.User;
 import com.rtst.dhjc.service.serviceImpl.systemInfo.UserServiceImpl;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Calendar;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@Api(tags = "登录相关接口")
 public class LoginController {
     @Autowired
     UserServiceImpl userService;
@@ -22,7 +24,8 @@ public class LoginController {
      * @return
      */
     @PostMapping("/login")
-    public BaseResult login(@RequestBody User user){
+    @ApiOperation(value="登录")
+    public BaseResult login(@RequestBody @ApiParam(name="用户对象",value="userName,passWord(Json格式)",required=true)  User user){
         log.warn("进入登录....");
         String userName = user.getUserName();
         String passWord = user.getPassWord();
@@ -35,17 +38,19 @@ public class LoginController {
         CacheUser loginUser =  userService.login(userName,passWord);
         Calendar c = Calendar.getInstance();
         long loginDate = c.getTimeInMillis();//获取当前登陆时间
-        if(loginDate>loginUser.getExpiredDate().getTime()){
-            return BaseResult.error(400,"用户已过期");
-        }else{
+        if(loginDate<loginUser.getExpiredDate().getTime()&&loginUser.getState()==1){
             // 登录成功返回用户信息
             return BaseResult.ok().put("data",loginUser);
+        }else{
+            // 登录用户已过期提示信息
+            return BaseResult.error(400,"当前用户不能登录");
         }
     }
     /**
      * description: 登出
      * create time: 2019/6/28 17:37
      */
+    @ApiOperation(value="退出登录")
     @GetMapping("/logout")
     public BaseResult logOut() {
         userService.logout();

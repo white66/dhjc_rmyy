@@ -1,6 +1,8 @@
 package com.rtst.dhjc.repository.systemInfo;
 
 import com.rtst.dhjc.entity.systemInfo.Permission;
+import com.rtst.dhjc.entity.systemInfo.Role;
+import com.rtst.dhjc.entity.systemInfo.RolePermission;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface AuthMapper {
      * 通过角色Id查询角色的权限信息
      * @return
      */
-    Set<String> findAuthByRoleId(List<Integer> roleIds);
+    Set<String> findAuthByRoleIds(List<Integer> roleIds);
 
     /**
      * 查询权限列表
@@ -40,4 +42,14 @@ public interface AuthMapper {
      * @return
      */
     int authUpdate(Permission permission);
+
+    List<Permission> findAuthByRoleId(Role role);
+
+    List<Permission> findAuthAll();
+
+    int addPermissionForRole(List<RolePermission> permissionsAdd);
+
+    int deletePermissionForRole(List<RolePermission> permissionsDelete);
+
+    List<RolePermission> findAuthByRoleIdAndPermission(RolePermission rolePermission);
 }

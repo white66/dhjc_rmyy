@@ -1,6 +1,8 @@
 package com.rtst.dhjc.repository.systemInfo;
 
+import com.rtst.dhjc.entity.systemInfo.Permission;
 import com.rtst.dhjc.entity.systemInfo.Role;
+import com.rtst.dhjc.entity.systemInfo.UserRole;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,4 +42,8 @@ public interface RoleMapper {
      * @return
      */
     int updateRole(Role role);
+
+    void addUserRole(UserRole userRole);
+
+    List<Permission> findPermissionByRoleId(Role role);
 }

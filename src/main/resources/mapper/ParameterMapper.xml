@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.ParameterMapper">
+    <update id="updateParameter" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" separator=";" close="">
+            UPDATE C_Signal set
+                SIG_State = #{item.sIG_State}
+            where SIG_ID= #{item.sIG_ID}
+        </foreach>
+    </update>
+
+    <select id="parameterList" resultType="com.rtst.dhjc.entity.Signal">
+         select SIG_ID,SIG_Code ,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum, SIG_DataType,SIG_State
+                        from C_Signal
+    </select>
+    <select id="findParameterByState" resultType="com.rtst.dhjc.entity.ParameterInfo">
+        select SIG_ID,SIG_Code ,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum, SIG_DataType,SIG_State
+                        from C_Signal
+                        where SIG_State = 1
+    </select>
+</mapper>

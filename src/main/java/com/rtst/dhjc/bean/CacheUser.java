@@ -14,8 +14,6 @@ public class CacheUser implements Serializable {
 
     private Integer schoolId;
 
-    private String name;
-
     private Integer state;
 
     private String userName;
@@ -23,4 +21,5 @@ public class CacheUser implements Serializable {
     private String token;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date expiredDate;//过期时间
+    private Integer roleId;//角色ID
 }

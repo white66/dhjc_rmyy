@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * </p>
  *
- * @author leigq
- * @since 2019-06-28
+ * @author White Liu
+ * @since 2020-05-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

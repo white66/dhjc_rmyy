@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.RoleMapper">
-    <sql  id="allcolumn">
-       r.roleId,r.role
-    </sql>
     <insert id="addRole" parameterType="com.rtst.dhjc.entity.systemInfo.Role">
         insert into sys_role(role,description,available) values(#{role},#{description},#{available})
+    </insert>
+    <insert id="addUserRole" parameterType="com.rtst.dhjc.entity.systemInfo.UserRole">
+        insert into sys_user_role(
+            <if test="null!=roleId and ''!=roleId">roleId,</if>
+            userId)
+            values(
+            <if test="null!=roleId and ''!=roleId">#{roleId},</if>
+            #{userId})
     </insert>
     <update id="updateRole" parameterType="com.rtst.dhjc.entity.systemInfo.Role">
         update sys_user
@@ -21,7 +26,7 @@
                 where roleId = #{roleId}
     </delete>
     <select id="findRoleByUserId" parameterType="Integer" resultType="com.rtst.dhjc.entity.systemInfo.Role">
-        select <include refid="allcolumn"/>
+        select u.userId userId,u.userName userName,u.expiredDate expiredDate,u.state state,u.schoolId,r.roleId roleId,r.role role,r.available available
                 from sys_role r
                 left join sys_user_role ur on ur.roleId = r.RoleId
                 left join sys_user u on u.userId = ur.userId
@@ -30,5 +35,8 @@
     <select id="roleList" resultType="com.rtst.dhjc.entity.systemInfo.Role">
         select roleId,available,description,role
               from sys_role
+    </select>
+    <select id="findPermissionByRoleId" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
+        select
     </select>
 </mapper>

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.SignalMapper">
-    <sql id="allcolumn">
-        SIG_ID,SIG_Code,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum,SIG_DataType
-    </sql>
     <select id="getSignalList" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime as dsigDateTime
+        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
                 from C_Signal s
                 left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
                 left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
@@ -13,7 +10,7 @@
                 order by d.DSIG_DateTime desc
     </select>
     <select id="getSignalListHistory" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime as dsigDateTime
+        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,f.FAC_Name,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
                 from C_Signal s
                 left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
                 left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
@@ -25,7 +22,7 @@
     </select>
     <select id="getAlarmListHistory" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
         select SIG_ID,SIG_Code,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum,SIG_DataType,FAC_Name,DSIG_Value,schoolId,dsigDateTime
-              from (select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,f.FAC_Name FAC_Name,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime as dsigDateTime
+              from (select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,f.FAC_Name FAC_Name,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime dsigDateTime
                         from C_Signal s
                             left join C_Facility f on f.FAC_Code = s.SIG_FAC_ID
                             left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code

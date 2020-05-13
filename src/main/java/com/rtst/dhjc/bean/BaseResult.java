@@ -1,6 +1,9 @@
 package com.rtst.dhjc.bean;
 
+import com.rtst.dhjc.entity.Signal;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BaseResult extends HashMap<String, Object> {
@@ -40,6 +43,11 @@ public class BaseResult extends HashMap<String, Object> {
     }
 
     public static BaseResult ok(Map<String, Object> map) {
+        BaseResult r = new BaseResult();
+        r.putAll(map);
+        return r;
+    }
+    public static BaseResult okMap(Map<String, List<Signal>> map) {
         BaseResult r = new BaseResult();
         r.putAll(map);
         return r;

@@ -2,37 +2,42 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.UserMapper">
     <sql id="allcolumn">
-       userId,userName,passWord,schoolId,state,name,salt,expiredDate,createTime,phone,remarks
+       userId,userName,passWord,schoolId,state,expiredDate,createTime
     </sql>
-    <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
-        insert into sys_user(userName,passWord,schoolId,state,name,salt,expiredDate,createTime,phone,remarks)
-              values(#{userName},#{passWord},#{schoolId},#{state},#{name},#{salt},#{expiredDate},#{createTime},#{phone},#{remarks})
+    <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_userinfo(userName,passWord,schoolId,state,expiredDate,createTime)
+              values(#{userName},#{passWord},#{schoolId},#{state},#{expiredDate},#{createTime})
     </insert>
     <update id="updateUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
-        update sys_user
+        update sys_userinfo
         <trim prefix="set" suffixOverrides=",">
-            <if test="null!=name and ''!=name">name= #{name},</if>
             <if test="null!=userName and ''!=userName">userName=#{userName},</if>
             <if test="null!=passWord and ''!=passWord">passWord=#{passWord},</if>
             <if test="state>=0 and null!=state">state=#{state},</if>
             <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
-            <if test="null!=expiredDate and ''!=expiredDate">expiredDate=#{expiredDate},</if>
-            <if test="null!=phone and ''!=phone">phone=#{phone},</if>
-            <if test="null!=remarks and ''!=remarks">remarks=#{remarks}</if>
+            <if test="null!=expiredDate and ''!=expiredDate">expiredDate=#{expiredDate}</if>
         </trim>
         where userId= #{userId}
     </update>
-    <delete id="delUser" parameterType="integer">
-        delete from sys_user where userId = #{userId}
+    <delete id="deleteUser" parameterType="integer">
+        delete from sys_userinfo where userId = #{userId}
     </delete>
 
     <select id="findUserByAccount"  parameterType="java.util.HashMap" resultType="com.rtst.dhjc.entity.systemInfo.User">
         select <include refid="allcolumn"/>
-              from sys_user
+              from sys_userinfo
               where userName = #{userName}
     </select>
     <select id="findUserList" resultType="com.rtst.dhjc.entity.systemInfo.User">
-        select <include refid="allcolumn"/>
-                from sys_user
+        select userId,userName,schoolId,state,expiredDate,createTime
+                from sys_userinfo
+    </select>
+    <select id="findUserBySchoolId" resultType="java.lang.Integer">
+        select count(*) from sys_userinfo where schoolId = #{schoolId}
+    </select>
+    <select id="findRoleByUserName" resultType="com.rtst.dhjc.entity.systemInfo.UserRole">
+        select r.roleId roleId from sys_userinfo u
+                left join sys_user_role  r on r.userId = u.userId
+                where u.userName = #{userName}
     </select>
 </mapper>

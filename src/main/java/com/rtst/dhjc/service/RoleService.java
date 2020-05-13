@@ -1,6 +1,7 @@
 package com.rtst.dhjc.service;
 
 
+import com.rtst.dhjc.entity.systemInfo.Permission;
 import com.rtst.dhjc.entity.systemInfo.Role;
 
 import java.util.List;
@@ -40,4 +41,6 @@ public interface RoleService {
      * @return
      */
     Map<String,Object> updateRole(Role role);
+
+    List<Permission> findPermissionByRoleId(Role role);
 }

@@ -22,7 +22,8 @@
         select id,schoolName,belongArea,location,lngAndLat
                 from C_SchoolInfor
                 where 1=1
-                <if test="null!=belongArea and ''!=belongArea">and belongArea = #{belongArea}</if>
-
+                <if test="null!=belongArea and ''!=belongArea">
+                    and belongArea = #{belongArea}
+                </if>
     </select>
 </mapper>

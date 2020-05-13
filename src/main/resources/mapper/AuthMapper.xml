@@ -2,11 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.AuthMapper">
     <sql id="allcolumn">
-        permissionId,available,parentId,parentIds,permission,permissionName,resourceType,url
+        permissionId,available,parentId,id,permission,permissionName,resourceType,url
     </sql>
     <insert id="authAdd" parameterType="com.rtst.dhjc.entity.systemInfo.Permission">
-        insert into sys_permission(available,parentId,parentIds,permission,permissionName,resourceType,url)
-                values (#{available},#{parentId},#{parentIds},#{permission},#{permissionName},#{resourceType},#{url})
+        insert into sys_permission(available,parentId,id,permission,permissionName,resourceType,url)
+                values (#{available},#{parentId},#{id},#{permission},#{permissionName},#{resourceType},#{url})
+    </insert>
+    <insert id="addPermissionForRole" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" separator=";" close="">
+            insert into sys_role_permission(roleId,permissionId) values (#{item.roleId},#{item.permissionId})
+        </foreach>
     </insert>
     <update id="authUpdate" parameterType="com.rtst.dhjc.entity.systemInfo.Permission">
         update sys_permission set available=#{available}, parentId=#{parentId},permission=#{permission},permissionName=#{permissionName},resourceType=#{resourceType},url=#{url}
@@ -15,7 +20,12 @@
     <delete id="authDel" parameterType="integer">
         delete  from sys_permission where permissionId =#{permissionId}
     </delete>
-    <select id="findAuthByRoleId"  resultType="string">
+    <delete id="deletePermissionForRole" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" separator=";" close="">
+            delete  from sys_role_permission where permissionId =#{item.permissionId} and roleId =#{item.roleId}
+        </foreach>
+    </delete>
+    <select id="findAuthByRoleIds"  resultType="string">
       select p.permission
           from sys_permission p
           left join sys_role_permission rp on rp.permissionId = p.permissionId
@@ -28,5 +38,20 @@
     <select id="authList" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
         select <include refid="allcolumn"/>
                 from sys_permission
+    </select>
+    <select id="findAuthByRoleId" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
+        select p.permission permission,p.permissionId permissionId,p.available available,p.permissionName permissionName,p.resourceType resourceType,p.url url,p.parentId parentId,p.id id
+            from sys_role_permission rp
+            left join sys_permission p on rp.permissionId = p.permissionId
+            where rp.roleId = #{roleId} and p.resourceType = 'vue'
+    </select>
+    <select id="findAuthAll" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
+        select <include refid="allcolumn"/>
+            from sys_permission
+            where resourceType = 'vue'
+    </select>
+    <select id="findAuthByRoleIdAndPermission" resultType="com.rtst.dhjc.entity.systemInfo.RolePermission">
+        select id,roleId,permissionId from sys_role_permission
+                where roleId = #{roleId} and permissionId = #{permissionId}
     </select>
 </mapper>

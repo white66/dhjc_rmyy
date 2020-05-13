@@ -4,13 +4,13 @@ server:
 mybatis:
   type-aliases-package: com.rtst.dhjc.entity
   mapper-locations: classpath:mapper/*Mapper.xml
-# SqlServer 配置
+# mysql 配置
 spring:
   datasource:
-    url: jdbc:sqlserver://59.172.63.46:14333;databasename=RTST_SYschool
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    username: sa
-    password: 88123456aa
+    url: jdbc:mysql://localhost:3306/rtstdhjc?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: abc123
     #连接池配置
     druid:
       initial-size: 5
@@ -32,10 +32,21 @@ logging:
       hibernate:
         SQL: DEBUG
 pagehelper:
-  helperDialect: sqlserver
+  helperDialect: mysql
   #启用合理化，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
   pageSizeZero: true
+
+#Swagger 配置
+swagger:
+  title: 动环监测API文档
+  desc:
+  version: 1.0
+  termsOfServiceUrl: javascript:void(0)
+  license: Apache 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
+  basePackage: com.rtst.dhjc
+  groupName: 默认API示例分组
 

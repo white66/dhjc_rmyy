@@ -8,6 +8,9 @@ import com.rtst.dhjc.entity.DeviceInfo;
 import com.rtst.dhjc.entity.SchoolInfo;
 import com.rtst.dhjc.service.serviceImpl.DeviceServiceImpl;
 import com.rtst.dhjc.service.serviceImpl.SchoolServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/school")
+@Api(tags = "学校信息")
 public class SchoolController {
     @Autowired
     SchoolServiceImpl schoolService;
@@ -32,7 +36,8 @@ public class SchoolController {
      * @return
      */
     @PostMapping("/schoolListPage")
-    public BaseResult schoolListPage(@RequestBody SchoolInfo schoolInfo){
+    @ApiOperation(value="通过所属区域ID查询学校信息列表(分页)")
+    public BaseResult schoolListPage(@RequestBody @ApiParam(name="学校对象",value="belongArea,pageNum,pageSize",required = true) SchoolInfo schoolInfo){
         PageHelper.startPage(schoolInfo.getPageNum(),schoolInfo.getPageSize());
         List<SchoolInfo> schoolInfoList = schoolService.findSchoolList(schoolInfo);
         PageInfo pageInfo = new PageInfo(schoolInfoList);
@@ -43,7 +48,8 @@ public class SchoolController {
      * @return
      */
     @PostMapping("/schoolList")
-    public BaseResult schoolList(@RequestBody SchoolInfo schoolInfo){
+    @ApiOperation(value="查询所有学校信息")
+    public BaseResult schoolList(@RequestBody @ApiParam(name="学校对象") SchoolInfo schoolInfo){
         List<SchoolInfo> schoolInfoList = schoolService.findSchoolList(schoolInfo);
         return BaseResult.ok().put("data",schoolInfoList);
     }
@@ -52,7 +58,8 @@ public class SchoolController {
      * @return
      */
     @PostMapping("/addSchool")
-    public BaseResult addSchool(@RequestBody SchoolInfo schoolInfo){
+    @ApiOperation(value="添加学校")
+    public BaseResult addSchool(@RequestBody @ApiParam(name="学校对象",value="schoolName,belongArea,location,lngAndLat", required = true) SchoolInfo schoolInfo){
         int refNum = schoolService.addSchool(schoolInfo);
         if(refNum>0){
             return BaseResult.ok("添加学校"+schoolInfo.getSchoolName()+"成功");
@@ -66,7 +73,8 @@ public class SchoolController {
      * @return
      */
     @DeleteMapping("/deleteSchool")
-    public BaseResult deleteSchool(@RequestBody SchoolInfo schoolInfo){
+    @ApiOperation(value="以id删除学校信息")
+    public BaseResult deleteSchool(@RequestBody @ApiParam(name="学校ID",value="id",required = true) SchoolInfo schoolInfo){
         int refNum = schoolService.deleteSchool(schoolInfo);
         DeviceInfo deviceInfo = new DeviceInfo();
         deviceInfo.setSchoolId(schoolInfo.getId());
@@ -83,7 +91,8 @@ public class SchoolController {
      * @return
      */
     @PostMapping("/updateSchool")
-    public BaseResult updateSchool(@RequestBody SchoolInfo schoolInfo){
+    @ApiOperation(value="修改学校信息")
+    public BaseResult updateSchool(@RequestBody @ApiParam(name="学校对象",value="id,schoolName,belongArea,location,lngAndLat",required = true) SchoolInfo schoolInfo){
         int refNum = schoolService.updateSchool(schoolInfo);
         if(refNum>0){
             return BaseResult.ok("修改学校信息成功！");

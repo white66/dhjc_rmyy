@@ -1,12 +1,16 @@
 package com.rtst.dhjc.service.serviceImpl.systemInfo;
 
 import com.rtst.dhjc.bean.CacheUser;
+import com.rtst.dhjc.entity.systemInfo.Role;
 import com.rtst.dhjc.entity.systemInfo.User;
+import com.rtst.dhjc.entity.systemInfo.UserRole;
 import com.rtst.dhjc.exception.LoginException;
+import com.rtst.dhjc.repository.systemInfo.RoleMapper;
 import com.rtst.dhjc.repository.systemInfo.UserMapper;
 import com.rtst.dhjc.service.UserService;
 import com.rtst.dhjc.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -26,6 +30,8 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    RoleMapper roleMapper;
     /**
      * 根据账户查询用户信息
      * @param userAccount
@@ -62,6 +68,8 @@ public class UserServiceImpl implements UserService {
                     .token(currentUser.getSession().getId().toString())
                     .build();
             BeanUtils.copyProperties(user, cacheUser);
+            UserRole userRole = userMapper.findRoleByUserName(userName);
+            cacheUser.setRoleId(userRole.getRoleId());
             log.warn("CacheUser is {}", cacheUser.toString());
         } catch (UnknownAccountException e) {
             log.error("账户不存在异常：", e);
@@ -101,8 +109,19 @@ public class UserServiceImpl implements UserService {
             resultMap.put("user",user);
             return resultMap;
         }
+        int userCount = userMapper.findUserBySchoolId(user.getSchoolId());
+        //当前学校注册用户超过2个时，不能再注册新的用户
+        if(userCount>=2){
+            resultMap.put("msg","该学校注册用户已达上限");
+            resultMap.put("code",400);
+            return resultMap;
+        }
         user.setPassWord(MD5Utils.encrypt(user.getPassWord()));
         int ref = userMapper.addUser(user);
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getUserId());
+        //为新注册的用户添加默认角色
+        roleMapper.addUserRole(userRole);
         if(ref>0){
             resultMap.put("msg","添加成功！");
             resultMap.put("user",user);
@@ -117,15 +136,9 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Map<String, Object> delUser(User user) {
-        Map<String,Object> resultMap = new LinkedHashMap<>();
-        int ref = userMapper.delUser(user);
-        if(ref>0){
-            resultMap.put("msg","删除成功！");
-        }else{
-            resultMap.put("msg","删除失败！");
-        }
-        return resultMap;
+    public int deleteUser(User user) {
+        int ref = userMapper.deleteUser(user);
+        return ref;
     }
     /**
      * 修改用户信息
@@ -133,16 +146,11 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Map<String, Object> updateUser(User user) {
-        Map<String,Object> resultMap = new LinkedHashMap<>();
-        user.setPassWord(MD5Utils.encrypt(user.getPassWord()));
-        int ref = userMapper.updateUser(user);
-        if(ref>0){
-            resultMap.put("msg","修改成功");
-            resultMap.put("user",user);
-        }else{
-            resultMap.put("msg","修改失败");
+    public int updateUser(User user) {
+        if(""!=user.getPassWord()&&null!=user.getPassWord()){
+            user.setPassWord(MD5Utils.encrypt(user.getPassWord()));
         }
-        return resultMap;
+        int ref = userMapper.updateUser(user);
+        return ref;
     }
 }

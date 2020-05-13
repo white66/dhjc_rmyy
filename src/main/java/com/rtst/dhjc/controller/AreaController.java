@@ -3,6 +3,10 @@ package com.rtst.dhjc.controller;
 import com.rtst.dhjc.bean.BaseResult;
 import com.rtst.dhjc.entity.AreaInfo;
 import com.rtst.dhjc.service.serviceImpl.AreaServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/area")
+@Api(tags = "区域信息")
 public class AreaController {
     @Autowired
     AreaServiceImpl areaService;
@@ -72,7 +77,8 @@ public class AreaController {
      * @return
      */
     @PostMapping("/findArea")
-    public BaseResult areaList(@RequestBody AreaInfo areaInfo){
+    @ApiOperation(value="根据上级区域Id查询下级区域信息")
+    public BaseResult areaList(@RequestBody @ApiParam(name="所属父区域ID",value = "parentId", required = true) AreaInfo areaInfo){
         List<AreaInfo> areaInfos = areaService.findAreaList(areaInfo);
         return BaseResult.ok().put("data",areaInfos);
     }
@@ -82,7 +88,8 @@ public class AreaController {
      * @return
      */
     @PostMapping("/findAreaUp")
-    public BaseResult areaListUp(@RequestBody AreaInfo areaInfo){
+    @ApiOperation(value="通过学校所属区域Id查询出所在省市区的信息")
+    public BaseResult areaListUp(@RequestBody @ApiParam(name = "区域ID",value = "id",required = true) AreaInfo areaInfo){
         List<AreaInfo> areaInfoList = areaService.findAreaListUp(areaInfo);
         return BaseResult.ok().put("data",areaInfoList);
     }

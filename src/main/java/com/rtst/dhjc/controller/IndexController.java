@@ -3,8 +3,13 @@ package com.rtst.dhjc.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rtst.dhjc.bean.BaseResult;
+import com.rtst.dhjc.entity.ParameterInfo;
 import com.rtst.dhjc.entity.Signal;
+import com.rtst.dhjc.service.serviceImpl.ParameterServiceImpl;
 import com.rtst.dhjc.service.serviceImpl.SignalServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +23,21 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/signal")
+@Api(tags="首页显示相关接口")
 public class IndexController {
     @Autowired
     SignalServiceImpl signalService;
-
+    @Autowired
+    ParameterServiceImpl parameterService;
     /**
      * 查询信号表最新的实时数据
      * @return
      */
-    @GetMapping("/signalList")
-    public BaseResult signalList(@RequestBody Signal signal){
-        PageHelper.startPage(1,40);
+    @PostMapping("/signalList")
+    @ApiOperation(value="通过schoolId查询最新实时数据)")
+    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID",value = "schoolId",required = true) Signal signal){
+        List<ParameterInfo> parameterInfos = parameterService.findParameterByState();
+        PageHelper.startPage(1,parameterInfos.size());
         List<Signal> signalList = signalService.getSignalList(signal);
         PageInfo pageInfo = new PageInfo(signalList);
         return BaseResult.ok().put("data",pageInfo);
@@ -39,7 +48,8 @@ public class IndexController {
      * @return
      */
     @PostMapping("/signalListHistory")
-    public BaseResult signalListHistory(@RequestBody Signal signal){
+    @ApiOperation(value = "查询历史数据(分页)")
+    public BaseResult signalListHistory(@RequestBody @ApiParam(name="信号对象",value="schoolId,dsigDateTime,pageNum,pageSize",required = true) Signal signal){
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*40);
         List<Signal> signalList = signalService.getSignalListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);
@@ -52,7 +62,8 @@ public class IndexController {
      * @return
      */
     @PostMapping("/alarmList")
-    public BaseResult alarmList(@RequestBody Signal signal){
+    @ApiOperation(value = "告警信息列表(分页)")
+    public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="schoolId,dsigDateTime,pageNum,pageSize",required = true) Signal signal){
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*4);
         List<Signal> signalList = signalService.getAlarmListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);

@@ -1,6 +1,8 @@
 package com.rtst.dhjc.repository.systemInfo;
 
+import com.rtst.dhjc.entity.systemInfo.Role;
 import com.rtst.dhjc.entity.systemInfo.User;
+import com.rtst.dhjc.entity.systemInfo.UserRole;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,7 +34,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    int delUser(User user);
+    int deleteUser(User user);
 
     /**
      * 修改用户信息
@@ -40,4 +42,13 @@ public interface UserMapper {
      * @return
      */
     int updateUser(User user);
+
+    /**
+     * 通过学校Id查询当前学校已注册的用户人数
+     * @param schoolId
+     * @return
+     */
+    int findUserBySchoolId(Integer schoolId);
+
+    UserRole findRoleByUserName(String userName);
 }

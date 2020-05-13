@@ -43,15 +43,15 @@ public interface UserService {
 
     /**
      * 删除用户
-     * @param userId
+     * @param user
      * @return
      */
-    Map<String,Object> delUser(User user);
+    int deleteUser(User user);
 
     /**
      * 修改用户信息
      * @param user
      * @return
      */
-    Map<String,Object> updateUser(User user);
+    int updateUser(User user);
 }

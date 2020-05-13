@@ -11,8 +11,8 @@ import java.io.Serializable;
  *
  * </p>
  *
- * @author leigq
- * @since 2019-06-28
+ * @author White Liu
+ * @since 2020-05-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,7 +32,7 @@ public class Permission implements Serializable {
     private Long parentId;
 
 
-    private String parentIds;
+    private String id;
 
 
     private String permission;
@@ -44,6 +44,7 @@ public class Permission implements Serializable {
     private String resourceType;
 
     private String url;
+    private int state;
 
 
 }
