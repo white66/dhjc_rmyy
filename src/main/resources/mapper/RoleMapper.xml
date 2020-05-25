@@ -13,13 +13,17 @@
             #{userId})
     </insert>
     <update id="updateRole" parameterType="com.rtst.dhjc.entity.systemInfo.Role">
-        update sys_user
+        update sys_role
           <trim prefix="set" suffixOverrides=",">
               <if test="null!=role and ''!=role">role=#{role},</if>
               <if test="null!=description and ''!=description">description=#{description},</if>
               <if test="null!=available and ''!=available">available=#{available},</if>
           </trim>
         where roleId =#{roleId}
+    </update>
+    <update id="updateUserRole" parameterType="com.rtst.dhjc.entity.systemInfo.UserRole">
+        update sys_user_role set roleId = #{roleId}
+              where userId = #{userId}
     </update>
     <delete id="delRole" parameterType="com.rtst.dhjc.entity.systemInfo.Role">
         delete from sys_role
@@ -29,14 +33,11 @@
         select u.userId userId,u.userName userName,u.expiredDate expiredDate,u.state state,u.schoolId,r.roleId roleId,r.role role,r.available available
                 from sys_role r
                 left join sys_user_role ur on ur.roleId = r.RoleId
-                left join sys_user u on u.userId = ur.userId
+                left join sys_userinfo u on u.userId = ur.userId
                 where u.userId = #{userId}
     </select>
     <select id="roleList" resultType="com.rtst.dhjc.entity.systemInfo.Role">
         select roleId,available,description,role
               from sys_role
-    </select>
-    <select id="findPermissionByRoleId" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
-        select
     </select>
 </mapper>

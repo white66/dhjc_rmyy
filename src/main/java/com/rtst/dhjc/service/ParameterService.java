@@ -1,6 +1,5 @@
 package com.rtst.dhjc.service;
 
-import com.rtst.dhjc.entity.ParameterInfo;
 import com.rtst.dhjc.entity.Signal;
 import com.rtst.dhjc.entity.SignalVo;
 
@@ -19,5 +18,5 @@ public interface ParameterService {
 
     int updateParameter(List<SignalVo> signals);
 
-    List<ParameterInfo> findParameterByState();
+    int findParameterByState(Signal signal);
 }

@@ -1,6 +1,5 @@
 package com.rtst.dhjc.repository;
 
-import com.rtst.dhjc.entity.ParameterInfo;
 import com.rtst.dhjc.entity.Signal;
 import com.rtst.dhjc.entity.SignalVo;
 import org.springframework.stereotype.Component;
@@ -20,5 +19,5 @@ public interface ParameterMapper {
 
     int updateParameter(List<SignalVo> signals);
 
-    List<ParameterInfo> findParameterByState();
+    int findParameterByState(Signal signal);
 }

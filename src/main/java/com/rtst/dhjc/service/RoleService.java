@@ -1,11 +1,10 @@
 package com.rtst.dhjc.service;
 
 
-import com.rtst.dhjc.entity.systemInfo.Permission;
 import com.rtst.dhjc.entity.systemInfo.Role;
+import com.rtst.dhjc.entity.systemInfo.UserRole;
 
 import java.util.List;
-import java.util.Map;
 
 public interface RoleService {
     /**
@@ -22,25 +21,9 @@ public interface RoleService {
     List<Role> roleList();
 
     /**
-     * 添加角色
-     * @param role
+     * 更改用户的角色
+     * @param userRole
      * @return
      */
-    Map<String,Object> addRole(Role role);
-
-    /**
-     * 删除角色
-     * @param roleId
-     * @return
-     */
-    Map<String,Object> delRole(Integer roleId);
-
-    /**
-     * 修改角色
-     * @param role
-     * @return
-     */
-    Map<String,Object> updateRole(Role role);
-
-    List<Permission> findPermissionByRoleId(Role role);
+    int updateUserRole(UserRole userRole);
 }

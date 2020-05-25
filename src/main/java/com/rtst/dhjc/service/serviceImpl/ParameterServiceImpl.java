@@ -48,8 +48,8 @@ public class ParameterServiceImpl implements ParameterService {
      * @return
      */
     @Override
-    public List<ParameterInfo> findParameterByState() {
-        List<ParameterInfo> parameterInfos = parameterMapper.findParameterByState();
+    public int findParameterByState(Signal signal) {
+        int parameterInfos = parameterMapper.findParameterByState(signal);
         return parameterInfos;
     }
 }

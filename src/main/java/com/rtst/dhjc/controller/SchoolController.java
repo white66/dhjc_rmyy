@@ -1,13 +1,14 @@
 package com.rtst.dhjc.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rtst.dhjc.bean.BaseResult;
 import com.rtst.dhjc.entity.DeviceInfo;
 import com.rtst.dhjc.entity.SchoolInfo;
+import com.rtst.dhjc.entity.SiteInfo;
 import com.rtst.dhjc.service.serviceImpl.DeviceServiceImpl;
 import com.rtst.dhjc.service.serviceImpl.SchoolServiceImpl;
+import com.rtst.dhjc.service.serviceImpl.SiteServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,6 +32,8 @@ public class SchoolController {
     SchoolServiceImpl schoolService;
     @Autowired
     DeviceServiceImpl deviceService;
+    @Autowired
+    SiteServiceImpl siteService;
     /**
      * 查询学校信息列表分页
      * @return
@@ -78,6 +81,9 @@ public class SchoolController {
         int refNum = schoolService.deleteSchool(schoolInfo);
         DeviceInfo deviceInfo = new DeviceInfo();
         deviceInfo.setSchoolId(schoolInfo.getId());
+        SiteInfo siteInfo = new SiteInfo();
+        siteInfo.setSchoolId(schoolInfo.getId());
+        siteService.deleteSiteBySchoolId(siteInfo);
         int refNum1 = deviceService.deleteDeviceBySchoolId(deviceInfo);
         if(refNum>0 && refNum1>0){
             return BaseResult.ok("删除成功！");
@@ -100,5 +106,4 @@ public class SchoolController {
             return BaseResult.error(400,"修改学校失败！");
         }
     }
-
 }

@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.AuthMapper">
     <sql id="allcolumn">
-        permissionId,available,parentId,id,permission,permissionName,resourceType,url
+        permissionId,filePath,parentId,id,permission,permissionName,resourceType,url,iconPath
     </sql>
     <insert id="authAdd" parameterType="com.rtst.dhjc.entity.systemInfo.Permission">
-        insert into sys_permission(available,parentId,id,permission,permissionName,resourceType,url)
-                values (#{available},#{parentId},#{id},#{permission},#{permissionName},#{resourceType},#{url})
+        insert into sys_permission(filePath,parentId,id,permission,permissionName,resourceType,url,iconPath)
+                values (#{filePath},#{parentId},#{id},#{permission},#{permissionName},#{resourceType},#{url},#{iconPath})
     </insert>
     <insert id="addPermissionForRole" parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" open="" separator=";" close="">
@@ -14,7 +14,7 @@
         </foreach>
     </insert>
     <update id="authUpdate" parameterType="com.rtst.dhjc.entity.systemInfo.Permission">
-        update sys_permission set available=#{available}, parentId=#{parentId},permission=#{permission},permissionName=#{permissionName},resourceType=#{resourceType},url=#{url}
+        update sys_permission set iconPath=#{iconPath}, parentId=#{parentId},permission=#{permission},permissionName=#{permissionName},resourceType=#{resourceType},url=#{url},iconPath = #{iconPath}
                 where permissionId =#{permissionId}
     </update>
     <delete id="authDel" parameterType="integer">
@@ -40,7 +40,7 @@
                 from sys_permission
     </select>
     <select id="findAuthByRoleId" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
-        select p.permission permission,p.permissionId permissionId,p.available available,p.permissionName permissionName,p.resourceType resourceType,p.url url,p.parentId parentId,p.id id
+        select p.permission permission,p.permissionId permissionId,p.filePath filePath,p.permissionName permissionName,p.resourceType resourceType,p.url url,p.parentId parentId,p.id id,p.iconPath iconPath
             from sys_role_permission rp
             left join sys_permission p on rp.permissionId = p.permissionId
             where rp.roleId = #{roleId} and p.resourceType = 'vue'

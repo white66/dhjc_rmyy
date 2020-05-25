@@ -20,11 +20,12 @@ public class Signal implements Serializable {
     private int sIG_Address;//寄存器开始地址
     private int sIG_AddressNum;//地址个数
     private String sIG_DataType;//数据类型
-    private String fAC_Name;//设备类型名称
     private String dSIG_Value;//信号值
     private String dsigDateTime;//采集时间
     private int schoolId;//采集信息关联学校ID
     private int sIG_State;//是否启用 0 未启用 1启用
+    private int flag;//区分模块的标识
+    private int typeFlag;//区分IO模块温度湿度
     private int pageNum;//页数
     private int pageSize;
 }

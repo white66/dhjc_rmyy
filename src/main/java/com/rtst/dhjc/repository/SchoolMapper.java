@@ -1,6 +1,7 @@
 package com.rtst.dhjc.repository;
 
 import com.rtst.dhjc.entity.SchoolInfo;
+import com.rtst.dhjc.entity.SiteInfo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface SchoolMapper {
     int deleteSchool(SchoolInfo schoolInfo);
 
     int updateSchool(SchoolInfo schoolInfo);
+
+    List<SiteInfo> findSiteBySchoolId(SiteInfo siteInfo);
 }

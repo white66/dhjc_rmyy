@@ -23,28 +23,28 @@ public class Permission implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    private Integer permissionId;
+    private Integer permissionId;//权限ID
 
 
-    private Boolean available;
+    private String filePath;//文件路径
 
 
-    private Long parentId;
+    private Long parentId;//父ID
 
 
-    private String id;
+    private String id;//ID
 
 
-    private String permission;
+    private String permission;//权限
 
 
-    private String permissionName;
+    private String permissionName;//权限名
 
 
-    private String resourceType;
+    private String resourceType;//类型
 
-    private String url;
-    private int state;
-
+    private String url;//url路径
+    private int state;//状态值
+    private String iconPath;//图标路径
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.SiteMapper">
+
+    <select id="findSiteBySchoolId" parameterType="com.rtst.dhjc.entity.SiteInfo" resultType="com.rtst.dhjc.entity.SiteInfo">
+        select e.schoolId,e.siteId,e.siteName,s.schoolName from c_site e
+                  left join c_schoolinfor s on e.schoolId=s.id
+                  where e.schoolId = #{schoolId}
+    </select>
+    <insert id="addSite" parameterType="com.rtst.dhjc.entity.SiteInfo">
+        insert into c_site(schoolId,siteName) values (#{schoolId},#{siteName})
+    </insert>
+    <delete id="deleteSite" parameterType="com.rtst.dhjc.entity.SiteInfo">
+        delete from c_site where siteId = #{siteId}
+    </delete>
+    <delete id="deleteSiteBySchoolId" parameterType="com.rtst.dhjc.entity.SiteInfo">
+        delete from c_site where schoolId = #{schoolId}
+    </delete>
+</mapper>

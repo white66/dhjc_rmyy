@@ -13,9 +13,8 @@
          select SIG_ID,SIG_Code ,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum, SIG_DataType,SIG_State
                         from C_Signal
     </select>
-    <select id="findParameterByState" resultType="com.rtst.dhjc.entity.ParameterInfo">
-        select SIG_ID,SIG_Code ,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum, SIG_DataType,SIG_State
-                        from C_Signal
-                        where SIG_State = 1
+    <select id="findParameterByState" parameterType="com.rtst.dhjc.entity.Signal" resultType="integer" >
+        select count(*)  from C_Signal
+                        where SIG_State = 1 and flag = #{flag}
     </select>
 </mapper>

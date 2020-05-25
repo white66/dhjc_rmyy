@@ -48,5 +48,5 @@ swagger:
   license: Apache 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
   basePackage: com.rtst.dhjc
-  groupName: 默认API示例分组
+  groupName: 动环监测API文档
 

@@ -1,6 +1,7 @@
 package com.rtst.dhjc.service.serviceImpl;
 
 import com.rtst.dhjc.entity.SchoolInfo;
+import com.rtst.dhjc.entity.SiteInfo;
 import com.rtst.dhjc.repository.SchoolMapper;
 import com.rtst.dhjc.service.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
