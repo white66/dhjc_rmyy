@@ -20,4 +20,6 @@ public interface ParameterMapper {
     int updateParameter(List<SignalVo> signals);
 
     int findParameterByState(Signal signal);
+
+    int findParameterByUnit(Signal signal);
 }

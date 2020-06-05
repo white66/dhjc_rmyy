@@ -48,18 +48,16 @@ public class ShiroConfig {
          * 过滤链定义，从上向下顺序执行，authc 应放在 anon 下面
          * */
         Map<String,Filter> filterMap = new LinkedHashMap<>();
-        MyShiroFilter myFilter = new MyShiroFilter();
-        filterMap.put("authc",myFilter);
+        filterMap.put("authc",new MyShiroFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
         filterChainDefinitionMap.put("/api/login","anon");
         filterChainDefinitionMap.put("/api/user/userAdd","anon");
         filterChainDefinitionMap.put("/api/school/schoolList","anon");
-        // 配置不会被拦截的链接 顺序判断，因为前端模板采用了thymeleaf，这里不能直接使用 ("/static/**", "anon")来配置匿名访问，必须配置到每个静态目录
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/fonts/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/html/**", "anon");
+        //swagger2免拦截
+        filterChainDefinitionMap.put("/swagger-ui.html**", "anon");
+        filterChainDefinitionMap.put("/v2/api-docs", "anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/webjars/**", "anon");
         // 所有url都必须认证通过才可以访问
         filterChainDefinitionMap.put("/api/**", "authc");
         // 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了, 位置放在 anon、authc下面

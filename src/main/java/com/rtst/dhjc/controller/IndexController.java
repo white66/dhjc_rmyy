@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,11 +35,8 @@ public class IndexController {
     @PostMapping("/signalList")
     @ApiOperation(value="通过schoolId查询最新实时数据)")
     public BaseResult signalList(@RequestBody @ApiParam(name="学校ID",value = "schoolId,flag",required = true) Signal signal){
-        int parameterInfos = parameterService.findParameterByState(signal);
-        PageHelper.startPage(1,parameterInfos);
         List<Signal> signalList = signalService.getSignalList(signal);
-        PageInfo pageInfo = new PageInfo(signalList);
-        return BaseResult.ok().put("data",pageInfo);
+        return BaseResult.ok().put("data",signalList);
     }
 
     /**
@@ -50,10 +44,10 @@ public class IndexController {
      * @return
      */
     @PostMapping("/signalListHistory")
-    @ApiOperation(value = "查询历史数据(分页)")
-    public BaseResult signalListHistory(@RequestBody @ApiParam(name="信号对象",value="schoolId,flag,dsigDateTime,pageNum,pageSize",required = true) Signal signal){
-        int parameterInfos = parameterService.findParameterByState(signal);
-        PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*parameterInfos);
+    @ApiOperation(value = "查询历史数据(分页),按照电流、电压、功率、电能来分类分模块查询")
+    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,dsigDateTime,pageNum,pageSize,sigUnit",required = true) @RequestBody Signal signal){
+        int parameter = parameterService.findParameterByUnit(signal);
+        PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*parameter);
         List<Signal> signalList = signalService.getSignalListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);
         return BaseResult.ok().put("data",pageInfo);

@@ -1,7 +1,6 @@
 package com.rtst.dhjc.service.serviceImpl.systemInfo;
 
 import com.rtst.dhjc.bean.CacheUser;
-import com.rtst.dhjc.entity.systemInfo.Role;
 import com.rtst.dhjc.entity.systemInfo.User;
 import com.rtst.dhjc.entity.systemInfo.UserRole;
 import com.rtst.dhjc.exception.LoginException;
@@ -10,7 +9,6 @@ import com.rtst.dhjc.repository.systemInfo.UserMapper;
 import com.rtst.dhjc.service.UserService;
 import com.rtst.dhjc.util.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -111,7 +109,7 @@ public class UserServiceImpl implements UserService {
         }
         int userCount = userMapper.findUserBySchoolId(user.getSchoolId());
         //当前学校注册用户超过2个时，不能再注册新的用户
-        if(userCount>=2){
+        if(userCount>=5){
             resultMap.put("msg","该学校注册用户已达上限");
             resultMap.put("code",400);
             return resultMap;

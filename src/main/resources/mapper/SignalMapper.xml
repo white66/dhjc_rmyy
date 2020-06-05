@@ -1,48 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.SignalMapper">
+    <select id="getSignalListHistory" resultType="com.rtst.dhjc.entity.Signal">
+        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.typeFlag,s.SIG_Unit sigUnit,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime
+        from C_Signal s
+        left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
+        where d.schoolId = #{schoolId} and s.flag = #{flag}
+        <if test="sigUnit!=null and sigUnit!=''">
+            and s.SIG_Unit=#{sigUnit}
+        </if>
+            and ( datediff ( d.DSIG_DateTime , #{dsigDateTime} ) = 0 )
+        <if test="null!=typeFlag and ''!=typeFlag">
+            and typeFlag between 1 and 4
+        </if>
+        and RIGHT(d.DSIG_DateTime,5)='00:00'
+        order by d.DSIG_DateTime desc,s.SIG_ID asc
+    </select>
     <select id="getSignalList" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
+        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit sigUnit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
                 from C_Signal s
                 left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                where d.schoolId = #{schoolId} and s.flag = #{flag}
+                where d.schoolId = #{schoolId} and s.flag = #{flag} and d.DSIG_DateTime=(select MAX(DSIG_DateTime) from C_DSignal)
                 order by d.DSIG_DateTime desc,s.SIG_Code
     </select>
-    <select id="getSignalListHistory" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.typeFlag,s.SIG_Unit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
-                from C_Signal s
-                left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                where d.schoolId = #{schoolId} and s.flag = #{flag}
-                <if test="null!= dsigDateTime and ''!=dsigDateTime">
-                    and ( datediff ( d.DSIG_DateTime , #{dsigDateTime} ) = 0 )
-                </if>
-                order by d.DSIG_DateTime desc,s.SIG_ID asc
-    </select>
     <select id="getAlarmListHistory" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select SIG_ID,SIG_Code,SIG_Name,SIG_Unit,s.typeFlag,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum,SIG_DataType,DSIG_Value,schoolId,dsigDateTime
-              from (select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.typeFlag,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime dsigDateTime
-                        from C_Signal s
-                            left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                        where s.SIG_ID = 34
-                    union all
-                    select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.typeFlag,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime as dsigDateTime
-                        from C_Signal s
-                          left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                        where s.SIG_ID = 35
-                    union all
-                    select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.typeFlag,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime as dsigDateTime
-                        from C_Signal s
-                          left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                        where s.SIG_ID = 39
-                    union all
-                    select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.typeFlag,s.SIG_Name SIG_Name,s.SIG_Unit SIG_Unit,s.SIG_Type SIG_Type,s.SIG_FAC_ID SIG_FAC_ID,s.SIG_Address SIG_Address,s.SIG_AddressNum SIG_AddressNum,s.SIG_DataType SIG_DataType,d.DSIG_Value DSIG_Value,d.schoolId schoolId,d.DSIG_DateTime as dsigDateTime
-                        from C_Signal s
-                          left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                        where s.SIG_ID = 40 ) as a
-              where a.schoolId = #{schoolId}
-              <if test="null!= dsigDateTime and ''!=dsigDateTime">
-                  and ( datediff ( dsigDateTime , #{dsigDateTime} ) = 0 )
-              </if>
-              order by a.dsigDateTime desc,a.SIG_ID asc
+        select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.typeFlag typeFlag,s.SIG_Name SIG_Name,d.DSIG_Value DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
+          from C_Signal s
+          left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
+          where d.schoolId = #{schoolId}
+            and s.typeFlag between 3 and 4
+            and RIGHT(d.DSIG_DateTime,5)='00:00'
+            and ( datediff ( d.DSIG_DateTime , #{dsigDateTime} ) = 0 )
+        order by d.DSIG_DateTime desc,s.SIG_ID asc
     </select>
 </mapper>

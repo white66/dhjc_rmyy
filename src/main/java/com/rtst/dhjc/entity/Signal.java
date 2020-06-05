@@ -14,7 +14,7 @@ public class Signal implements Serializable {
     private int sIG_ID;
     private String sIG_Code;//编号
     private String sIG_Name;//信号名称
-    private String sIG_Unit;//信号单位
+    private String sigUnit;//信号单位
     private String sIG_Type;//信号类型
     private String sIG_FAC_ID;//信号设备编号
     private int sIG_Address;//寄存器开始地址

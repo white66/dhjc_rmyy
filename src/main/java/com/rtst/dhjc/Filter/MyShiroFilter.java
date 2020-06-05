@@ -1,64 +1,52 @@
 package com.rtst.dhjc.Filter;
 
-import com.alibaba.fastjson.JSON;
-import com.rtst.dhjc.bean.BaseResult;
-import org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class MyShiroFilter extends PassThruAuthenticationFilter {
+@Slf4j
+@ServletComponentScan
+@WebFilter(urlPatterns = "/*",filterName = "shiroLoginFilter")
+public class MyShiroFilter implements Filter {
 
+    private FilterConfig config = null;
     @Override
-    public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue)
-            throws Exception {
-        HttpServletRequest req = (HttpServletRequest)request;
-        HttpServletResponse res = (HttpServletResponse)response;
-        if(req.getMethod().equals(RequestMethod.OPTIONS.name())){
-            return true;
-        }
-        return super.onPreHandle(request, response, mappedValue);
+    public void init(FilterConfig config) throws ServletException {
+        this.config = config;
     }
-    /**
-     * 如果isAccessAllowed返回false 则执行onAccessDenied
-     * @param request
-     * @param response
-     * @param mappedValue
-     * @return
-     */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (request instanceof HttpServletRequest) {
-            if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
-                return true;
-            }
-        }
-        return super.isAccessAllowed(request, response, mappedValue);
+    public void destroy() {
+        this.config = null;
     }
-    /**
-     * 在访问controller前判断是否登录，返回json，不进行重定向。
-     *
-     * @param request
-     * @param response
-     * @return true-继续往下执行，false-该filter过滤器已经处理，不继续执行其他过滤器
-     * @throws Exception
-     */
     @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        //这里是个坑，如果不设置的接受的访问源，那么前端都会报跨域错误，因为这里还没到corsConfig里面
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest) request).getHeader("Origin"));
-        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("application/json");
-        BaseResult result = new BaseResult().error(401, "用户未登录！");
-        httpServletResponse.getWriter().write(JSON.toJSONString(result));
-        return false;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        // 允许哪些Origin发起跨域请求,nginx下正常
+        // response.setHeader( "Access-Control-Allow-Origin", config.getInitParameter( "AccessControlAllowOrigin" ) );
+        response.setHeader( "Access-Control-Allow-Origin", "*" );
+        // 允许请求的方法
+        response.setHeader( "Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE,PUT" );
+        // 多少秒内，不需要再发送预检验请求，可以缓存该结果
+        response.setHeader( "Access-Control-Max-Age", "3600" );
+        // 表明它允许跨域请求包含xxx头
+        response.addHeader("Access-Control-Allow-Headers", "content-type,x-token, Accept, Authorization");
+        //是否允许浏览器携带用户身份信息（cookie）
+        response.setHeader( "Access-Control-Allow-Credentials", "true" );
+        // response.setHeader( "Access-Control-Expose-Headers", "*" );
+        if (request.getMethod().equals( "OPTIONS" )) {
+            log.info("shiro过滤器-------");
+            response.setStatus( 200 );
+            return;
+        }
+        System.out.println("------进入过滤器-----");
+        filterChain.doFilter( servletRequest, response );
     }
 }

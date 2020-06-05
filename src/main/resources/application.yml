@@ -42,11 +42,10 @@ pagehelper:
 #Swagger 配置
 swagger:
   title: 动环监测API文档
-  desc:
+  desc: 动环监测API文档
   version: 1.0
   termsOfServiceUrl: javascript:void(0)
   license: Apache 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.html
   basePackage: com.rtst.dhjc
-  groupName: 动环监测API文档
-
+  enable: true

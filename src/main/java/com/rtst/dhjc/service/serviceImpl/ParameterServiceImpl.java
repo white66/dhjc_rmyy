@@ -1,6 +1,5 @@
 package com.rtst.dhjc.service.serviceImpl;
 
-import com.rtst.dhjc.entity.ParameterInfo;
 import com.rtst.dhjc.entity.Signal;
 import com.rtst.dhjc.entity.SignalVo;
 import com.rtst.dhjc.repository.ParameterMapper;
@@ -44,12 +43,24 @@ public class ParameterServiceImpl implements ParameterService {
     }
 
     /**
-     * 获取参数
+     * 通过模块flag标识获取已勾选的参数总数
+     * @param  模块标识
      * @return
      */
     @Override
     public int findParameterByState(Signal signal) {
         int parameterInfos = parameterMapper.findParameterByState(signal);
         return parameterInfos;
+    }
+
+    /**
+     * 通过参数单位sigUnit、模块标识获取参数总条数
+     * @param signal
+     * @return
+     */
+    @Override
+    public int findParameterByUnit(Signal signal) {
+        int parameter =parameterMapper.findParameterByUnit(signal);
+        return parameter;
     }
 }

@@ -5,8 +5,8 @@
        userId,userName,passWord,schoolId,state,expiredDate,createTime
     </sql>
     <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User" useGeneratedKeys="true" keyProperty="userId">
-        insert into sys_userinfo(userName,passWord,schoolId,state,expiredDate,createTime)
-              values(#{userName},#{passWord},#{schoolId},#{state},#{expiredDate},#{createTime})
+        insert into sys_userinfo(userName,passWord,schoolId,state,expiredDate,createTime,email)
+              values(#{userName},#{passWord},#{schoolId},#{state},#{expiredDate},#{createTime},#{email})
     </insert>
     <update id="updateUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
         update sys_userinfo
@@ -15,6 +15,7 @@
             <if test="null!=passWord and ''!=passWord">passWord=#{passWord},</if>
             <if test="state>=0 and null!=state">state=#{state},</if>
             <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
+            <if test="null!=email and ''!=email">email=#{email}</if>
             <if test="null!=expiredDate and ''!=expiredDate">expiredDate=#{expiredDate}</if>
         </trim>
         where userId= #{userId}

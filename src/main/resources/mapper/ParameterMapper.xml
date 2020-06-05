@@ -17,4 +17,14 @@
         select count(*)  from C_Signal
                         where SIG_State = 1 and flag = #{flag}
     </select>
+    <select id="findParameterByUnit" resultType="java.lang.Integer">
+        select count(*)  from C_Signal
+        where SIG_State = 1 and flag = #{flag}
+        <if test="sigUnit!=null and ''!=sigUnit">
+            and SIG_Unit = #{sigUnit}
+        </if>
+        <if test="typeFlag!=null and ''!=typeFlag">
+            and typeFlag between 1 and 4
+        </if>
+    </select>
 </mapper>

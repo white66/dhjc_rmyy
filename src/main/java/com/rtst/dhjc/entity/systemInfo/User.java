@@ -1,7 +1,6 @@
 package com.rtst.dhjc.entity.systemInfo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -32,7 +31,7 @@ public class User implements Serializable {
     private String passWord;//密码
 
     private Integer state;//用户状态
-
+    private String email;//邮箱
     private String userName;//登录名
     private Integer pageNum;
     private Integer pageSize;

@@ -23,13 +23,11 @@ public class SignalServiceImpl implements SignalService {
         List<Signal> signals = signalMapper.getSignalList(signal);
         return signals;
     }
-
     @Override
     public List<Signal> getSignalListHistory(Signal signal) {
         List<Signal> signals = signalMapper.getSignalListHistory(signal);
         return signals;
     }
-
     @Override
     public List<Signal> getAlarmListHistory(Signal signal) {
         List<Signal> signalList = signalMapper.getAlarmListHistory(signal);
