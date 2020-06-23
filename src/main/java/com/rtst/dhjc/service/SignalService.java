@@ -16,4 +16,6 @@ public interface SignalService {
     List<Signal> getSignalListHistory(Signal signal);
 
     List<Signal> getAlarmListHistory(Signal signal);
+
+    List<Signal> getSignalAlarmList(Signal signal);
 }

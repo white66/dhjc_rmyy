@@ -1,6 +1,7 @@
 package com.rtst.dhjc.service.serviceImpl;
 
 import com.rtst.dhjc.entity.Signal;
+import com.rtst.dhjc.repository.ParameterMapper;
 import com.rtst.dhjc.repository.SignalMapper;
 import com.rtst.dhjc.service.SignalService;
 import com.rtst.dhjc.util.StringUtil;
@@ -18,6 +19,8 @@ import java.util.List;
 public class SignalServiceImpl implements SignalService {
     @Autowired
     SignalMapper signalMapper;
+    @Autowired
+    ParameterMapper parameterMapper;
     @Override
     public List<Signal> getSignalList(Signal signal) {
         List<Signal> signals = signalMapper.getSignalList(signal);
@@ -35,5 +38,24 @@ public class SignalServiceImpl implements SignalService {
             signals.setDSIG_Value(StringUtil.tenTurnTwo(Integer.parseInt(signals.getDSIG_Value())));
         }
         return signalList;
+    }
+
+    @Override
+    public List<Signal> getSignalAlarmList(Signal signal) {
+        List<Signal> signals = signalMapper.getSignalAlarmList(signal);
+        if(signals.size()>0) {
+            for (int i = 0; i < signals.size(); i++) {
+                if ("V".equals(signals.get(i).getSigUnit())) {
+                    if (Double.parseDouble(signals.get(i).getDSIG_Value()) >= 264 || Double.parseDouble(signals.get(i).getDSIG_Value()) <= 176) {
+                        signals.get(i).setAlarmState(1);
+                    } else {
+                        signals.get(i).setAlarmState(0);
+                    }
+                } else {
+                    signals.get(i).setAlarmState(0);
+                }
+            }
+        }
+        return signals;
     }
 }

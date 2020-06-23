@@ -13,7 +13,7 @@
          select SIG_ID,SIG_Code ,SIG_Name,SIG_Unit,SIG_Type,SIG_FAC_ID,SIG_Address,SIG_AddressNum, SIG_DataType,SIG_State
                         from C_Signal
     </select>
-    <select id="findParameterByState" parameterType="com.rtst.dhjc.entity.Signal" resultType="integer" >
+    <select id="findParameterByState" parameterType="com.rtst.dhjc.entity.Signal" resultType="java.lang.Integer" >
         select count(*)  from C_Signal
                         where SIG_State = 1 and flag = #{flag}
     </select>
@@ -26,5 +26,13 @@
         <if test="typeFlag!=null and ''!=typeFlag">
             and typeFlag between 1 and 4
         </if>
+    </select>
+    <select id="findEnergyParam" resultType="java.lang.Integer">
+        select count(*) from c_signal
+            where SIG_State=1 and SIG_Unit ="kWh"
+    </select>
+    <select id="findEnergyParamName" resultType="com.rtst.dhjc.entity.Signal">
+        select SIG_Code,SIG_Name from c_signal
+            where SIG_State=1 and SIG_Unit ="kWh"
     </select>
 </mapper>

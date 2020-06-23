@@ -43,7 +43,7 @@ public class LoginController {
             return BaseResult.ok().put("data",loginUser);
         }else{
             // 登录用户已过期提示信息
-            return BaseResult.error(400,"当前用户不能登录");
+            return BaseResult.error(400,"当前用户已过期");
         }
     }
     /**

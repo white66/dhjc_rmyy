@@ -34,25 +34,29 @@ public class IndexController {
      */
     @PostMapping("/signalList")
     @ApiOperation(value="通过schoolId查询最新实时数据)")
-    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID",value = "schoolId,flag",required = true) Signal signal){
+    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID,模块标识",value = "schoolId,flag",required = true) Signal signal){
         List<Signal> signalList = signalService.getSignalList(signal);
         return BaseResult.ok().put("data",signalList);
     }
-
+    @PostMapping("/signalAlarmList")
+    @ApiOperation(value = "查询实时告警信息")
+    public BaseResult signalAlarmList(@RequestBody @ApiParam(name="学校ID",value="schoolId",required = true) Signal signal){
+        List<Signal> signals = signalService.getSignalAlarmList(signal);
+        return BaseResult.ok().put("data",signals);
+    }
     /**
      * 查询历史数据
      * @return
      */
     @PostMapping("/signalListHistory")
     @ApiOperation(value = "查询历史数据(分页),按照电流、电压、功率、电能来分类分模块查询")
-    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,dsigDateTime,pageNum,pageSize,sigUnit",required = true) @RequestBody Signal signal){
+    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,dsigDateTime,pageNum,pageSize,sigUnit,typeFlag",required = true) @RequestBody Signal signal){
         int parameter = parameterService.findParameterByUnit(signal);
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*parameter);
         List<Signal> signalList = signalService.getSignalListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);
         return BaseResult.ok().put("data",pageInfo);
     }
-
     /**
      * 告警列表
      * @param signal

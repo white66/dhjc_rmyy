@@ -63,4 +63,20 @@ public class ParameterServiceImpl implements ParameterService {
         int parameter =parameterMapper.findParameterByUnit(signal);
         return parameter;
     }
+
+    /**
+     * 查询电能参数
+     * @return
+     */
+    @Override
+    public int findEnergyParam() {
+        int paramter = parameterMapper.findEnergyParam();
+        return paramter;
+    }
+
+    @Override
+    public List<Signal> findEnergyParamName() {
+        List<Signal> paramter = parameterMapper.findEnergyParamName();
+        return paramter;
+    }
 }

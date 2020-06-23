@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.DataMapper">
+    <insert id="addEnergyDay" parameterType="java.util.HashMap">
+        insert into c_energyday(sigCode,energyValue,dateTime) value(#{sigCode},#{energyValue},#{dateTime})
+    </insert>
+    <insert id="addEnergyMonth">
+        insert into c_energymonth(sigCode,energyValue,dateTime) value(#{sigCode},#{energyValue},#{dateTime})
+    </insert>
+    <insert id="addEnergyYear">
+        insert into c_energyyear(sigCode,energyValue,dateTime) value(#{sigCode},#{energyValue},#{dateTime})
+    </insert>
+    <!--获取最大电能值-->
+    <select id="energyMax" resultType="com.rtst.dhjc.entity.Signal">
+        select s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit sigUnit,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime
+                from c_dsignal d
+                LEFT JOIN c_signal s on d.DSIG_SIG_Code=s.SIG_Code
+                where s.SIG_Unit="kWh"
+                      and d.DSIG_DateTime =(select max(DSIG_DateTime)
+                            from c_dsignal
+                            where DSIG_DateTime between #{startTime} and #{endTime})
+                            order by s.SIG_Code asc
+
+    </select>
+    <!--获取最小电能值-->
+    <select id="energyMin" resultType="com.rtst.dhjc.entity.Signal">
+        select s.SIG_ID,s.SIG_Code,s.SIG_Name,s.SIG_Unit sigUnit,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime
+                from c_dsignal d
+                LEFT JOIN c_signal s on d.DSIG_SIG_Code=s.SIG_Code
+                where s.SIG_Unit="kWh"
+                      and d.DSIG_DateTime =(select min(DSIG_DateTime)
+                            from c_dsignal
+                            where DSIG_DateTime between #{startTime} and #{endTime})
+                order by s.SIG_Code asc
+    </select>
+    <select id="energyDayList" resultType="com.rtst.dhjc.entity.EnergyInfo">
+        select d.id,d.energyValue,d.dateTime,d.sigCode,s.SIG_Name sIG_Name
+              from c_energyday d
+              left join c_signal s on s.SIG_Code = d.sigCode
+              where d.dateTime between #{startTime} and #{endTime}
+              order by d.dateTime asc,d.sigCode asc
+    </select>
+    <select id="energyMonthList" resultType="com.rtst.dhjc.entity.EnergyInfo">
+        select m.id,m.energyValue,m.dateTime,m.sigCode,s.SIG_Name sIG_Name
+              from c_energymonth m
+              left join c_signal s on s.SIG_Code = m.sigCode
+              where m.dateTime between #{startTime} and #{endTime}
+              order by m.dateTime asc,m.sigCode asc
+    </select>
+    <select id="energyYearList" resultType="com.rtst.dhjc.entity.EnergyInfo">
+        select y.id,y.energyValue,y.dateTime,y.sigCode,s.SIG_Name sIG_Name
+              from c_energyyear y
+              left join c_signal s on s.SIG_Code = y.sigCode
+              where y.dateTime between #{startTime} and #{endTime}
+              order by y.dateTime asc,y.sigCode asc
+    </select>
+</mapper>

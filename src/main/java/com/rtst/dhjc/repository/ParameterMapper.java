@@ -22,4 +22,8 @@ public interface ParameterMapper {
     int findParameterByState(Signal signal);
 
     int findParameterByUnit(Signal signal);
+
+    int findEnergyParam();
+
+    List<Signal> findEnergyParamName();
 }

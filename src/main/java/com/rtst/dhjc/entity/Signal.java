@@ -28,4 +28,7 @@ public class Signal implements Serializable {
     private int typeFlag;//区分IO模块温度湿度
     private int pageNum;//页数
     private int pageSize;
+    private int alarmState;//该参数值是否达到告警值
+    private String startTime;
+    private String endTime;
 }

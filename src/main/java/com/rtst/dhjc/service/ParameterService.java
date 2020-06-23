@@ -21,4 +21,9 @@ public interface ParameterService {
     int findParameterByState(Signal signal);
 
     int findParameterByUnit(Signal signal);
+
+    int findEnergyParam();
+
+    List<Signal> findEnergyParamName();
+
 }
