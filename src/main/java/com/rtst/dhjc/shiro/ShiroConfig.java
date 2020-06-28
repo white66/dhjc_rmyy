@@ -13,6 +13,7 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,8 @@ public class ShiroConfig {
     private String password;
     @Value("${spring.redis.timeout}")
     private Duration timeout;
+    @Autowired
+    MyShiroFilter myShiroFilter;
     /**
      * Filter工厂，设置对应的过滤条件和跳转条件
      * @param securityManager
@@ -48,7 +51,7 @@ public class ShiroConfig {
          * 过滤链定义，从上向下顺序执行，authc 应放在 anon 下面
          * */
         Map<String,Filter> filterMap = new LinkedHashMap<>();
-        filterMap.put("authc",new MyShiroFilter());
+        filterMap.put("authc",myShiroFilter);
         shiroFilterFactoryBean.setFilters(filterMap);
         filterChainDefinitionMap.put("/api/login","anon");
         filterChainDefinitionMap.put("/api/user/userAdd","anon");

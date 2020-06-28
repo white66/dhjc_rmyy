@@ -108,8 +108,8 @@ public class UserServiceImpl implements UserService {
             return resultMap;
         }
         int userCount = userMapper.findUserBySchoolId(user.getSchoolId());
-        //当前学校注册用户超过2个时，不能再注册新的用户
-        if(userCount>=5){
+        //当前学校注册用户超过10个时，不能再注册新的用户
+        if(userCount>=10){
             resultMap.put("msg","该学校注册用户已达上限");
             resultMap.put("code",400);
             return resultMap;

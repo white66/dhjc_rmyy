@@ -10,8 +10,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ import java.util.Set;
  * 自定义 shiroRealm, 主要是重写其认证、授权
  */
 public class ShiroRealm extends AuthorizingRealm {
-    private static Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
     @Autowired
     UserServiceImpl userService;
     @Autowired
