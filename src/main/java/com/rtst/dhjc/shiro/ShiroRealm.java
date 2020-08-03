@@ -67,10 +67,6 @@ public class ShiroRealm extends AuthorizingRealm {
         if(null == user) {
             throw new UnknownAccountException("账号或密码不正确");
         }
-        //账号锁定
-        if(user.getState() == 0){
-            throw new LockedAccountException("账号已被锁定,请联系管理员");
-        }
         return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
     }
 }

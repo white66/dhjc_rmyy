@@ -25,10 +25,12 @@ public class Signal implements Serializable {
     private int schoolId;//采集信息关联学校ID
     private int sIG_State;//是否启用 0 未启用 1启用
     private int flag;//区分模块的标识
-    private int typeFlag;//区分IO模块温度湿度
+    private int typeFlag;//区分参数类型
     private int pageNum;//页数
     private int pageSize;
     private int alarmState;//该参数值是否达到告警值
     private String startTime;
     private String endTime;
+    private Integer startTypeFlag;
+    private Integer endTypeFlag;
 }

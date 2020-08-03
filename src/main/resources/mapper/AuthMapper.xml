@@ -44,6 +44,7 @@
             from sys_role_permission rp
             left join sys_permission p on rp.permissionId = p.permissionId
             where rp.roleId = #{roleId} and p.resourceType = 'vue'
+            order by p.id asc
     </select>
     <select id="findAuthAll" resultType="com.rtst.dhjc.entity.systemInfo.Permission">
         select <include refid="allcolumn"/>

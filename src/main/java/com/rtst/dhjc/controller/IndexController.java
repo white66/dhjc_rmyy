@@ -33,11 +33,12 @@ public class IndexController {
      * @return
      */
     @PostMapping("/signalList")
-    @ApiOperation(value="通过schoolId查询最新实时数据)")
-    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID,模块标识",value = "schoolId,flag",required = true) Signal signal){
+    @ApiOperation(value="通过schoolId查询最新电表、IO模块、UPS实时数据)")
+    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID,模块标识，参数类型",value = "schoolId,flag，startTypeFlag,endTypeFlag",required = true) Signal signal){
         List<Signal> signalList = signalService.getSignalList(signal);
         return BaseResult.ok().put("data",signalList);
     }
+
     @PostMapping("/signalAlarmList")
     @ApiOperation(value = "查询实时告警信息")
     public BaseResult signalAlarmList(@RequestBody @ApiParam(name="学校ID",value="schoolId",required = true) Signal signal){
@@ -58,12 +59,12 @@ public class IndexController {
         return BaseResult.ok().put("data",pageInfo);
     }
     /**
-     * 告警列表
+     * 状态列表
      * @param signal
      * @return
      */
     @PostMapping("/alarmList")
-    @ApiOperation(value = "告警信息列表(分页)")
+    @ApiOperation(value = "状态列表(分页)")
     public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="schoolId,dsigDateTime,pageNum,pageSize",required = true) Signal signal){
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*4);
         List<Signal> signalList = signalService.getAlarmListHistory(signal);
