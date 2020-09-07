@@ -23,9 +23,7 @@
         <if test="sigUnit!=null and ''!=sigUnit">
             and SIG_Unit = #{sigUnit}
         </if>
-        <if test="typeFlag!=null and ''!=typeFlag">
-            and typeFlag between 1 and 4
-        </if>
+            and typeFlag between #{startTypeFlag} and #{endTypeFlag}
     </select>
     <select id="findEnergyParam" resultType="java.lang.Integer">
         select count(*) from c_signal

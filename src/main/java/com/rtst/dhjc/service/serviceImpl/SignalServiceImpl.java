@@ -35,7 +35,9 @@ public class SignalServiceImpl implements SignalService {
     public List<Signal> getAlarmListHistory(Signal signal) {
         List<Signal> signalList = signalMapper.getAlarmListHistory(signal);
         for(Signal signals: signalList){
-            signals.setDSIG_Value(StringUtil.tenTurnTwo(Integer.parseInt(signals.getDSIG_Value())));
+            if(!signals.getDSIG_Value().equals("-")){
+                signals.setDSIG_Value(StringUtil.tenTurnTwo(Integer.parseInt(signals.getDSIG_Value())));
+            }
         }
         return signalList;
     }
@@ -46,10 +48,14 @@ public class SignalServiceImpl implements SignalService {
         if(signals.size()>0) {
             for (int i = 0; i < signals.size(); i++) {
                 if ("V".equals(signals.get(i).getSigUnit())) {
-                    if (Double.parseDouble(signals.get(i).getDSIG_Value()) >= 264 || Double.parseDouble(signals.get(i).getDSIG_Value()) <= 176) {
+                    if(signals.get(i).getDSIG_Value().equals("-")){//判断数据库值是否为-，不判断后面转换double类型会出现格式转换异常
                         signals.get(i).setAlarmState(1);
-                    } else {
-                        signals.get(i).setAlarmState(0);
+                    }else {
+                        if (Double.parseDouble(signals.get(i).getDSIG_Value()) >= 264 || Double.parseDouble(signals.get(i).getDSIG_Value()) <= 176) {
+                            signals.get(i).setAlarmState(1);
+                        } else {
+                            signals.get(i).setAlarmState(0);
+                        }
                     }
                 } else {
                     signals.get(i).setAlarmState(0);

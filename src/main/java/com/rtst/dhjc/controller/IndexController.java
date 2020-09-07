@@ -51,7 +51,7 @@ public class IndexController {
      */
     @PostMapping("/signalListHistory")
     @ApiOperation(value = "查询历史数据(分页),按照电流、电压、功率、电能来分类分模块查询")
-    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,dsigDateTime,pageNum,pageSize,sigUnit,typeFlag",required = true) @RequestBody Signal signal){
+    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,startTime,endTime,pageNum,pageSize,sigUnit,startTypeFlag,endTypeFlag",required = true) @RequestBody Signal signal){
         int parameter = parameterService.findParameterByUnit(signal);
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*parameter);
         List<Signal> signalList = signalService.getSignalListHistory(signal);
@@ -65,7 +65,7 @@ public class IndexController {
      */
     @PostMapping("/alarmList")
     @ApiOperation(value = "状态列表(分页)")
-    public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="schoolId,dsigDateTime,pageNum,pageSize",required = true) Signal signal){
+    public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="schoolId,startTime,endTime,pageNum,pageSize",required = true) Signal signal){
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*4);
         List<Signal> signalList = signalService.getAlarmListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);

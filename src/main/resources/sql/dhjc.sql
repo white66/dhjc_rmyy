@@ -81,7 +81,7 @@ CREATE TABLE `c_dsignal`  (
   `DSIG_DateTime` datetime(0) NULL DEFAULT NULL COMMENT '采集时间',
   `schoolId` int(11) NULL DEFAULT NULL COMMENT '所属学校ID',
   PRIMARY KEY (`DSIG_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7213 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for c_facility
@@ -132,7 +132,7 @@ CREATE TABLE `c_signal`  (
   `flag` int(10) NULL DEFAULT NULL COMMENT '电表分类',
   `typeFlag` int(2) NULL DEFAULT 0 COMMENT 'IO模块温度湿度标识',
   PRIMARY KEY (`SIG_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for c_signalcollect
@@ -143,7 +143,7 @@ CREATE TABLE `c_signalcollect`  (
   `comPort` int(11) NULL DEFAULT NULL COMMENT 'COM端口号',
   `deviceId` int(11) NULL DEFAULT NULL COMMENT '设备ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for c_site
@@ -154,7 +154,7 @@ CREATE TABLE `c_site`  (
   `schoolId` int(10) NULL DEFAULT NULL COMMENT '学校ID',
   `siteName` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机房名',
   PRIMARY KEY (`siteId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for sys_permission
