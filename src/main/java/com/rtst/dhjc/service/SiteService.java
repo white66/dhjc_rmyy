@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface SiteService {
 
-    List<SiteInfo> findSiteBySchoolId(SiteInfo siteInfo);
+    List<SiteInfo> findSiteByOrganizationId(SiteInfo siteInfo);
 
     int addSite(SiteInfo siteInfo);
 
     int deleteSite(SiteInfo siteInfo);
 
-    int deleteSiteBySchoolId(SiteInfo siteInfo);
+    int deleteSiteByOrganizationId(SiteInfo siteInfo);
 }

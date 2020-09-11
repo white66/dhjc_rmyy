@@ -33,15 +33,15 @@ public class IndexController {
      * @return
      */
     @PostMapping("/signalList")
-    @ApiOperation(value="通过schoolId查询最新电表、IO模块、UPS实时数据)")
-    public BaseResult signalList(@RequestBody @ApiParam(name="学校ID,模块标识，参数类型",value = "schoolId,flag，startTypeFlag,endTypeFlag",required = true) Signal signal){
+    @ApiOperation(value="通过organizationId查询最新电表、IO模块、UPS实时数据)")
+    public BaseResult signalList(@RequestBody @ApiParam(name="组织ID,模块标识，参数类型",value = "organizationId,flag，startTypeFlag,endTypeFlag",required = true) Signal signal){
         List<Signal> signalList = signalService.getSignalList(signal);
         return BaseResult.ok().put("data",signalList);
     }
 
     @PostMapping("/signalAlarmList")
     @ApiOperation(value = "查询实时告警信息")
-    public BaseResult signalAlarmList(@RequestBody @ApiParam(name="学校ID",value="schoolId",required = true) Signal signal){
+    public BaseResult signalAlarmList(@RequestBody @ApiParam(name="组织ID",value="organizationId",required = true) Signal signal){
         List<Signal> signals = signalService.getSignalAlarmList(signal);
         return BaseResult.ok().put("data",signals);
     }
@@ -51,7 +51,7 @@ public class IndexController {
      */
     @PostMapping("/signalListHistory")
     @ApiOperation(value = "查询历史数据(分页),按照电流、电压、功率、电能来分类分模块查询")
-    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="schoolId,flag,startTime,endTime,pageNum,pageSize,sigUnit,startTypeFlag,endTypeFlag",required = true) @RequestBody Signal signal){
+    public BaseResult signalListHistory( @ApiParam(name="信号对象",value="organizationId,flag,startTime,endTime,pageNum,pageSize,sigUnit,startTypeFlag,endTypeFlag",required = true) @RequestBody Signal signal){
         int parameter = parameterService.findParameterByUnit(signal);
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*parameter);
         List<Signal> signalList = signalService.getSignalListHistory(signal);
@@ -65,7 +65,7 @@ public class IndexController {
      */
     @PostMapping("/alarmList")
     @ApiOperation(value = "状态列表(分页)")
-    public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="schoolId,startTime,endTime,pageNum,pageSize",required = true) Signal signal){
+    public BaseResult alarmList(@RequestBody @ApiParam(name="信号对象",value="organizationId,startTime,endTime,pageNum,pageSize",required = true) Signal signal){
         PageHelper.startPage(signal.getPageNum(),signal.getPageSize()*4);
         List<Signal> signalList = signalService.getAlarmListHistory(signal);
         PageInfo pageInfo = new PageInfo(signalList);

@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/userAdd")
     //@RequiresPermissions("user:add")//权限管理;
     @ApiOperation(value="用户注册")
-    public BaseResult userInfoAdd(@RequestBody @ApiParam(name="用户对象",value="userName,passWord,schoolId,state,expiredDate,createTime",required = true) User user){
+    public BaseResult userInfoAdd(@RequestBody @ApiParam(name="用户对象",value="userName,passWord,organizationId,state,expiredDate,createTime",required = true) User user){
         Map<String,Object> resultMap = userService.addUser(user);
         return BaseResult.ok(resultMap);
     }
@@ -86,7 +86,7 @@ public class UserController {
      */
     @PostMapping("/userUpdate")
     @ApiOperation(value = "修改用户信息")
-    public BaseResult updateUser(@RequestBody @ApiParam(name="用户对象User", value="userName,passWord,schoolId,state,expiredDate",required = true) User user){
+    public BaseResult updateUser(@RequestBody @ApiParam(name="用户对象User", value="userName,passWord,organizationId,state,expiredDate",required = true) User user){
         int result = userService.updateUser(user);
         if(result>0){
             return BaseResult.ok().put("msg","修改用户信息成功");

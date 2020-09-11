@@ -1,7 +1,6 @@
 package com.rtst.dhjc.repository;
 
 import com.rtst.dhjc.entity.DeviceInfo;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public interface DeviceMapper {
 
     int updateDevice(DeviceInfo deviceInfo);
 
-    List<DeviceInfo> deviceListBySchoolName(DeviceInfo deviceInfo);
+    List<DeviceInfo> deviceListByOrganizationName(DeviceInfo deviceInfo);
 
-    int deleteDeviceBySchoolId(DeviceInfo deviceInfo);
+    int deleteDeviceByOrganizationId(DeviceInfo deviceInfo);
 }

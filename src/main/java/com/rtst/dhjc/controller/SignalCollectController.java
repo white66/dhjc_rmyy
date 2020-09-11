@@ -60,7 +60,7 @@ public class SignalCollectController {
      */
     @PostMapping("/addSignalCollect")
     @ApiOperation(value="添加采集配置信息")
-    public BaseResult addSignalCollect(@RequestBody @ApiParam(name="学校id,COM端口号",value="schoolId,comPort",required = true) SignalCollectInfo signalCollectInfo){
+    public BaseResult addSignalCollect(@RequestBody @ApiParam(name="学校id,COM端口号",value="organizationId,comPort",required = true) SignalCollectInfo signalCollectInfo){
         int refNum = signalCollectService.addSignalCollect(signalCollectInfo);
         if(refNum>0){
             return BaseResult.ok("配置信号采集信息成功！");
@@ -85,7 +85,7 @@ public class SignalCollectController {
     }
     @PostMapping("/updateSignalCollect")
     @ApiOperation(value="修改配置信息")
-    public BaseResult updateSignalCollect(@RequestBody @ApiParam(name="配置信息对象",value="id,comPort,schoolId",required = true) SignalCollectInfo signalCollectInfo){
+    public BaseResult updateSignalCollect(@RequestBody @ApiParam(name="配置信息对象",value="id,comPort,organizationId",required = true) SignalCollectInfo signalCollectInfo){
         int refNum = signalCollectService.updateSignalCollect(signalCollectInfo);
         if(refNum>0){
             return BaseResult.ok("修改配置信息com端口："+signalCollectInfo.getComPort()+";设备ID："+signalCollectInfo.getDeviceId()+"成功");

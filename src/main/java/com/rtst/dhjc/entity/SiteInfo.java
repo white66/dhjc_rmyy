@@ -11,8 +11,8 @@ import lombok.Data;
  */
 @Data
 public class SiteInfo {
-    private Integer schoolId;//学校ID
+    private Integer organizationId;//组织ID
     private Integer siteId;//机房ID
     private String siteName;//机房名
-    private String schoolName;//学校名
+    private String organizationName;//组织名
 }

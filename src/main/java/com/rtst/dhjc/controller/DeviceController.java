@@ -44,15 +44,15 @@ public class DeviceController {
     }
 
     /**
-     * 通过学校名查询设备信息
+     * 通过组织名查询设备信息
      * @param deviceInfo
      * @return
      */
-    @PostMapping("/deviceListBySchoolName")
+    @PostMapping("/deviceListByOrganizationName")
     @ApiOperation(value = "通过学校名查询下属设备信息")
-    public BaseResult deviceListBySchoolName(@RequestBody @ApiParam(name = "设备对象",value = "schoolName,pageNum,pageSize",required = true) DeviceInfo deviceInfo){
+    public BaseResult deviceListByOrganizationName(@RequestBody @ApiParam(name = "设备对象",value = "organizationName,pageNum,pageSize",required = true) DeviceInfo deviceInfo){
         PageHelper.startPage(deviceInfo.getPageNum(),deviceInfo.getPageSize());
-        List<DeviceInfo> deviceInfoList = deviceService.deviceListBySchoolName(deviceInfo);
+        List<DeviceInfo> deviceInfoList = deviceService.deviceListByOrganizationName(deviceInfo);
         PageInfo pageInfo = new PageInfo(deviceInfoList);
         return BaseResult.ok().put("data",pageInfo);
     }
@@ -82,7 +82,7 @@ public class DeviceController {
      */
     @PostMapping("/addDevice")
     @ApiOperation(value = "添加设备信息")
-    public BaseResult insertDevice(@RequestBody @ApiParam(name="设备对象",value = "id,deviceName,schoolId",required = true) DeviceInfo deviceInfo){
+    public BaseResult insertDevice(@RequestBody @ApiParam(name="设备对象",value = "id,deviceName,organizationId",required = true) DeviceInfo deviceInfo){
         int refNum = deviceService.insertDevice(deviceInfo);
         if(refNum==0){
             return  BaseResult.error(400,"添加失败！");
@@ -99,7 +99,7 @@ public class DeviceController {
      */
     @PostMapping("/updateDevice")
     @ApiOperation(value = "修改设备信息")
-    public BaseResult updateDevice(@RequestBody @ApiParam(name="设备信息对象",value="id,deviceName,schoolId",required = true) DeviceInfo deviceInfo){
+    public BaseResult updateDevice(@RequestBody @ApiParam(name="设备信息对象",value="id,deviceName,organizationId",required = true) DeviceInfo deviceInfo){
         int refNum = deviceService.updateDevice(deviceInfo);
         if(refNum==0){
             return  BaseResult.error(400,"修改失败！");

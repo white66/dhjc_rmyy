@@ -5,7 +5,7 @@
         select  s.SIG_ID,s.SIG_Code,s.SIG_Name,s.typeFlag,s.SIG_Unit sigUnit,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime
         from C_Signal s
         left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-        where d.schoolId = #{schoolId} and s.flag = #{flag}
+        where d.organizationId = #{organizationId} and s.flag = #{flag}
         and d.DSIG_DateTime between #{startTime} and #{endTime}
         <if test="sigUnit!=null and sigUnit!=''">
             and s.SIG_Unit=#{sigUnit}
@@ -14,28 +14,28 @@
         order by d.DSIG_DateTime desc,s.SIG_ID asc
     </select>
     <select id="getSignalList" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit sigUnit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value dSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
+        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit sigUnit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value dSIG_Value,d.DSIG_DateTime dsigDateTime,d.organizationId organizationId
                 from C_Signal s
                 left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                where d.schoolId = #{schoolId} and s.flag = #{flag}
+                where d.organizationId = #{organizationId} and s.flag = #{flag}
                       and d.DSIG_DateTime=(select MAX(DSIG_DateTime) from C_DSignal)
                       and s.typeFlag between #{startTypeFlag} and #{endTypeFlag}
                 order by d.DSIG_DateTime desc,s.SIG_Code
     </select>
     <select id="getAlarmListHistory" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.flag,s.typeFlag typeFlag,s.SIG_Name SIG_Name,d.DSIG_Value DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
+        select s.SIG_ID SIG_ID,s.SIG_Code SIG_Code ,s.flag,s.typeFlag typeFlag,s.SIG_Name SIG_Name,d.DSIG_Value DSIG_Value,d.DSIG_DateTime dsigDateTime,d.organizationId organizationId
           from C_Signal s
           left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-          where d.schoolId = #{schoolId}
+          where d.organizationId = #{organizationId}
             and s.typeFlag between 3 and 4
             and d.DSIG_DateTime between #{startTime} and #{endTime}
         order by d.DSIG_DateTime desc,s.SIG_ID asc
     </select>
     <select id="getSignalAlarmList" parameterType="com.rtst.dhjc.entity.Signal" resultType="com.rtst.dhjc.entity.Signal">
-        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit sigUnit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.schoolId schoolId
+        select  s.SIG_ID,s.SIG_Code,s.typeFlag,s.SIG_Name,s.SIG_Unit sigUnit,s.SIG_Type,s.SIG_FAC_ID,s.SIG_Address,s.SIG_AddressNum,s.SIG_DataType,s.flag,d.DSIG_Value,d.DSIG_DateTime dsigDateTime,d.organizationId organizationId
                 from C_Signal s
                 left join C_DSignal d on d.DSIG_SIG_Code = s.SIG_Code
-                where d.schoolId = #{schoolId} and d.DSIG_DateTime=(select MAX(DSIG_DateTime) from C_DSignal)
+                where d.organizationId = #{organizationId} and d.DSIG_DateTime=(select MAX(DSIG_DateTime) from C_DSignal)
                 order by d.DSIG_DateTime desc,s.SIG_Code
     </select>
 </mapper>

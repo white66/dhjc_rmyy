@@ -18,7 +18,7 @@ public class Alarm {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date warn_DateTime;//报警时间
     private String warn_Content;//报警信息
-    private Integer school_Id;//学校ID
+    private Integer organizationId;//学校ID
     private String warn_SIG_Code;//参数码
     private String startTime;//开始时间
     private String endTime;//结束时间

@@ -3,7 +3,7 @@
 <mapper namespace="com.rtst.dhjc.repository.AlarmMapper">
 
     <select id="alarmList" resultType="com.rtst.dhjc.entity.Alarm">
-        select warn_Id,warn_DateTime,warn_Content,school_Id,warn_SIG_Code
+        select warn_Id,warn_DateTime,warn_Content,organizationId,warn_SIG_Code
               from c_alarm
                   where warn_DateTime between #{startTime} and #{endTime}
     </select>

@@ -45,14 +45,14 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public List<DeviceInfo> deviceListBySchoolName(DeviceInfo deviceInfo) {
-        List<DeviceInfo> deviceInfoList = deviceMapper.deviceListBySchoolName(deviceInfo);
+    public List<DeviceInfo> deviceListByOrganizationName(DeviceInfo deviceInfo) {
+        List<DeviceInfo> deviceInfoList = deviceMapper.deviceListByOrganizationName(deviceInfo);
         return deviceInfoList;
     }
 
     @Override
-    public int deleteDeviceBySchoolId(DeviceInfo deviceInfo) {
-        int refNum = deviceMapper.deleteDeviceBySchoolId(deviceInfo);
+    public int deleteDeviceByOrganizationId(DeviceInfo deviceInfo) {
+        int refNum = deviceMapper.deleteDeviceByOrganizationId(deviceInfo);
         return refNum;
     }
 }

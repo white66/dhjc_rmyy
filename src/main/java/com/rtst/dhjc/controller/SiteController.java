@@ -25,18 +25,18 @@ public class SiteController {
     @Autowired
     SiteServiceImpl siteService;
     /**
-     * 根据学校ID查询机房信息
+     * 根据组织ID查询机房信息
      * @return
      */
-    @PostMapping("/findSiteBySchoolId")
+    @PostMapping("/findSiteByOrganizationId")
     @ApiOperation(value = "根据学校ID查询机房信息")
-    public BaseResult findSiteBySchoolId(@RequestBody @ApiParam(name="学校ID",value="schoolId",required = true) SiteInfo siteInfo){
-        List<SiteInfo> siteInfos = siteService.findSiteBySchoolId(siteInfo);
+    public BaseResult findSiteByOrganizationId(@RequestBody @ApiParam(name="组织ID",value="organizationId",required = true) SiteInfo siteInfo){
+        List<SiteInfo> siteInfos = siteService.findSiteByOrganizationId(siteInfo);
         return BaseResult.ok().put("data",siteInfos);
     }
     @PostMapping("/addSite")
     @ApiOperation(value="添加机房站点")
-    public BaseResult addSite(@RequestBody @ApiParam(name="站点",value="schoolId,siteId,siteName",required = true) SiteInfo siteInfo){
+    public BaseResult addSite(@RequestBody @ApiParam(name="站点",value="organizationId,siteId,siteName",required = true) SiteInfo siteInfo){
         int refNum = siteService.addSite(siteInfo);
         if(refNum>0){
             return BaseResult.ok("添加成功");

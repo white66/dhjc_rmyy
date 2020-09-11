@@ -1,6 +1,5 @@
 package com.rtst.dhjc.repository.systemInfo;
 
-import com.rtst.dhjc.entity.systemInfo.Role;
 import com.rtst.dhjc.entity.systemInfo.User;
 import com.rtst.dhjc.entity.systemInfo.UserRole;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public interface UserMapper {
      * @param schoolId
      * @return
      */
-    int findUserBySchoolId(Integer schoolId);
+    int findUserByOrganizationId(Integer schoolId);
 
     UserRole findRoleByUserName(String userName);
 }

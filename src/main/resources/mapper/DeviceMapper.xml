@@ -2,32 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.DeviceMapper">
     <insert id="insertDevice" parameterType="com.rtst.dhjc.entity.DeviceInfo">
-        insert into C_DeviceInfor(deviceName,schoolId) values (#{deviceName},#{schoolId})
+        insert into C_DeviceInfor(deviceName,organizationId) values (#{deviceName},#{organizationId})
     </insert>
     <update id="updateDevice" parameterType="com.rtst.dhjc.entity.DeviceInfo">
         update C_DeviceInfor
         <trim prefix="set" suffixOverrides=",">
             <if test="null!=deviceName and ''!=deviceName">deviceName=#{deviceName},</if>
-            <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
+            <if test="null!=organizationId and ''!=organizationId">organizationId=#{organizationId},</if>
         </trim>
         where id =#{id}
     </update>
     <delete id="deleteDeviceById" parameterType="com.rtst.dhjc.entity.DeviceInfo">
         delete from C_DeviceInfor  where id = #{id}
     </delete>
-    <delete id="deleteDeviceBySchoolId" parameterType="com.rtst.dhjc.entity.DeviceInfo">
-        delete from C_DeviceInfor where schoolId = #{schoolId}
+    <delete id="deleteDeviceByOrganizationId" parameterType="com.rtst.dhjc.entity.DeviceInfo">
+        delete from C_DeviceInfor where organizationId = #{organizationId}
     </delete>
     <select id="findDevice" resultType="com.rtst.dhjc.entity.DeviceInfo">
-        select d.id id,d.deviceName deviceName,d.schoolId schoolId,s.schoolName schoolName from
+        select d.id id,d.deviceName deviceName,d.organizationId organizationId,s.organizationName organizationName from
                     C_DeviceInfor d
-                    left join  C_SchoolInfor s on d.schoolId = s.id
+                    left join  C_organization s on d.organizationId = s.id
     </select>
-    <select id="deviceListBySchoolName" parameterType="com.rtst.dhjc.entity.DeviceInfo" resultType="com.rtst.dhjc.entity.DeviceInfo">
-        select d.id id,d.deviceName deviceName,d.schoolId schoolId,s.schoolName schoolName from
+    <select id="deviceListByOrganizationName" parameterType="com.rtst.dhjc.entity.DeviceInfo" resultType="com.rtst.dhjc.entity.DeviceInfo">
+        select d.id id,d.deviceName deviceName,d.organizationId organizationId,s.organizationName organizationName from
                     C_DeviceInfor d
-                    left join  C_SchoolInfor s on d.schoolId = s.id
-                    where s.schoolName = #{schoolName}
+                    left join  C_organization s on d.organizationId = s.id
+                    where s.organizationName = #{organizationName}
     </select>
 
 </mapper>

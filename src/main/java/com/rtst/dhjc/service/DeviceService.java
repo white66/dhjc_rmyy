@@ -20,7 +20,7 @@ public interface DeviceService {
 
     int updateDevice(DeviceInfo deviceInfo);
 
-    List<DeviceInfo> deviceListBySchoolName(DeviceInfo deviceInfo);
+    List<DeviceInfo> deviceListByOrganizationName(DeviceInfo deviceInfo);
 
-    int deleteDeviceBySchoolId(DeviceInfo deviceInfo);
+    int deleteDeviceByOrganizationId(DeviceInfo deviceInfo);
 }

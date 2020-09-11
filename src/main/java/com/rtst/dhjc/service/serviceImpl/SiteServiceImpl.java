@@ -21,8 +21,8 @@ public class SiteServiceImpl implements SiteService {
     SiteMapper siteMapper;
 
     @Override
-    public List<SiteInfo> findSiteBySchoolId(SiteInfo siteInfo) {
-        List<SiteInfo> siteInfos = siteMapper.findSiteBySchoolId(siteInfo);
+    public List<SiteInfo> findSiteByOrganizationId(SiteInfo siteInfo) {
+        List<SiteInfo> siteInfos = siteMapper.findSiteByOrganizationId(siteInfo);
         return siteInfos;
     }
 
@@ -39,8 +39,8 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
-    public int deleteSiteBySchoolId(SiteInfo siteInfo) {
-        int refNum = siteMapper.deleteSiteBySchoolId(siteInfo);
+    public int deleteSiteByOrganizationId(SiteInfo siteInfo) {
+        int refNum = siteMapper.deleteSiteByOrganizationId(siteInfo);
         return refNum;
     }
 }

@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.rtst.dhjc.repository.systemInfo.UserMapper">
     <sql id="allcolumn">
-       userId,userName,passWord,schoolId,state,expiredDate,createTime
+       userId,userName,passWord,organizationId,state,expiredDate,createTime
     </sql>
     <insert id="addUser" parameterType="com.rtst.dhjc.entity.systemInfo.User" useGeneratedKeys="true" keyProperty="userId">
-        insert into sys_userinfo(userName,passWord,schoolId,state,expiredDate,createTime,email)
-              values(#{userName},#{passWord},#{schoolId},#{state},#{expiredDate},#{createTime},#{email})
+        insert into sys_userinfo(userName,passWord,organizationId,state,expiredDate,createTime,email)
+              values(#{userName},#{passWord},#{organizationId},#{state},#{expiredDate},#{createTime},#{email})
     </insert>
     <update id="updateUser" parameterType="com.rtst.dhjc.entity.systemInfo.User">
         update sys_userinfo
@@ -14,7 +14,7 @@
             <if test="null!=userName and ''!=userName">userName=#{userName},</if>
             <if test="null!=passWord and ''!=passWord">passWord=#{passWord},</if>
             <if test="state>=0 and null!=state">state=#{state},</if>
-            <if test="null!=schoolId and ''!=schoolId">schoolId=#{schoolId},</if>
+            <if test="null!=organizationId and ''!=organizationId">organizationId=#{organizationId},</if>
             <if test="null!=email and ''!=email">email=#{email}</if>
             <if test="null!=expiredDate and ''!=expiredDate">expiredDate=#{expiredDate}</if>
         </trim>
@@ -30,11 +30,11 @@
               where userName = #{userName}
     </select>
     <select id="findUserList" resultType="com.rtst.dhjc.entity.systemInfo.User">
-        select userId,userName,schoolId,state,expiredDate,createTime
+        select userId,userName,organizationId,state,expiredDate,createTime
                 from sys_userinfo
     </select>
-    <select id="findUserBySchoolId" resultType="java.lang.Integer">
-        select count(*) from sys_userinfo where schoolId = #{schoolId}
+    <select id="findUserByOrganizationId" resultType="java.lang.Integer">
+        select count(*) from sys_userinfo where organizationId = #{organizationId}
     </select>
     <select id="findRoleByUserName" resultType="com.rtst.dhjc.entity.systemInfo.UserRole">
         select r.roleId roleId from sys_userinfo u

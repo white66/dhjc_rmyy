@@ -13,8 +13,8 @@ import lombok.Data;
 public class DeviceInfo {
     private int id;//通讯管理机id
     private String deviceName;//通讯管理机名称
-    private int schoolId;//所对应的学校id
-    private String schoolName;//学校名称
+    private int organizationId;//所对应的组织id
+    private String organizationName;//组织名称
     private int pageNum;//页数
     private int pageSize;
 }

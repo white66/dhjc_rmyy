@@ -23,7 +23,7 @@ public class User implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;//用户注册时间
 
-    private Integer  schoolId;//绑定的学校ID
+    private Integer  organizationId;//绑定的组织ID
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date expiredDate;//到期时间

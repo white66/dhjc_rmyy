@@ -12,7 +12,7 @@ import java.util.Date;
 public class CacheUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Integer schoolId;
+    private Integer organizationId;
 
     private Integer state;
 

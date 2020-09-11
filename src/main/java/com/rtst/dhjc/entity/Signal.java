@@ -22,7 +22,7 @@ public class Signal implements Serializable {
     private String sIG_DataType;//数据类型
     private String dSIG_Value;//信号值
     private String dsigDateTime;//采集时间
-    private int schoolId;//采集信息关联学校ID
+    private int organizationId;//采集信息关联组织ID
     private int sIG_State;//是否启用 0 未启用 1启用
     private int flag;//区分模块的标识
     private int typeFlag;//区分参数类型
