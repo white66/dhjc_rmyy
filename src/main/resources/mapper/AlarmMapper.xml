@@ -7,4 +7,9 @@
               from c_alarm
                   where warn_DateTime between #{startTime} and #{endTime}
     </select>
+    <select id="selectAlarmList" resultType="com.rtst.dhjc.entity.Alarm">
+        select warn_Id,warn_DateTime,warn_Content,organizationId,warn_SIG_Code
+              from c_alarm
+                  where warn_DateTime >=DATE_SUB(NOW(), INTERVAL 20 SECOND)
+    </select>
 </mapper>

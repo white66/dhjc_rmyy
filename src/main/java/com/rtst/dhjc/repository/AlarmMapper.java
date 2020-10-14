@@ -15,4 +15,7 @@ import java.util.List;
 @Component
 public interface AlarmMapper {
     List<Alarm> alarmList(Alarm alarm);
+
+    List<Alarm> selectAlarmList();
+
 }

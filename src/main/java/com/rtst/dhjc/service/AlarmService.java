@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface AlarmService {
     List<Alarm> alarmList(Alarm alarm);
+
+    List<Alarm> selectAlarmList();
 }

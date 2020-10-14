@@ -24,4 +24,10 @@ public class AlarmServiceImpl implements AlarmService {
         List<Alarm> alarms = alarmMapper.alarmList(alarm);
         return alarms;
     }
+
+    @Override
+    public List<Alarm> selectAlarmList() {
+        List<Alarm> alarmList = alarmMapper.selectAlarmList();
+        return alarmList;
+    }
 }

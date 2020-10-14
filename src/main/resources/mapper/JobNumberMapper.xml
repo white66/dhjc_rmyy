@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rtst.dhjc.repository.JobNumberMapper">
+
+    <select id="jobNumberList" resultType="com.rtst.dhjc.entity.JobNumber">
+        select id,jobNumber
+              from c_jobnumber
+    </select>
+    <insert id="addJobNumber" parameterType="com.rtst.dhjc.entity.JobNumber">
+        insert into c_jobnumber(jobNumber) values (#{jobNumber})
+    </insert>
+    <delete id="deleteJobNumberById" parameterType="com.rtst.dhjc.entity.JobNumber">
+        delete from c_jobnumber
+                    where id = #{id}
+    </delete>
+    <update id="updateJobNumber" parameterType="com.rtst.dhjc.entity.JobNumber">
+        update c_jobnumber set jobNumber = #{jobNumber}
+                where id = #{id}
+    </update>
+</mapper>
