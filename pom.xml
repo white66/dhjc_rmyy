@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.3</version>
+            <version>1.1.10</version>
         </dependency>
         <!--调用WebService接口所需要的的依赖包-->
         <dependency>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.25</version>
+            <version>1.2.72</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

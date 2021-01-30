@@ -30,7 +30,7 @@
                 where roleId = #{roleId}
     </delete>
     <select id="findRoleByUserId" parameterType="Integer" resultType="com.rtst.dhjc.entity.systemInfo.Role">
-        select u.userId userId,u.userName userName,u.expiredDate expiredDate,u.state state,u.schoolId,r.roleId roleId,r.role role,r.available available
+        select u.userId userId,u.userName userName,u.expiredDate expiredDate,u.state state,u.organizationId,r.roleId roleId,r.role role,r.available available
                 from sys_role r
                 left join sys_user_role ur on ur.roleId = r.RoleId
                 left join sys_userinfo u on u.userId = ur.userId
